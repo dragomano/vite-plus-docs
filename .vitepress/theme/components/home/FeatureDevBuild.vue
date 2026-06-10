@@ -32,7 +32,7 @@ import viteIcon from '@assets/icons/vite-light.svg';
       </div>
       <div class="px-3 py-1.5 bg-slate rounded w-fit flex gap-2 items-center">
         <span class="text-grey text-sm font-mono hidden md:inline">На базе</span>
-        <a href="https://vite.dev/" target="_blank">
+        <a href="https://vite-docs.ru/" target="_blank">
           <figure class="project-icon">
             <img loading="lazy" :src="viteIcon" alt="Vite" class="w-[20px] h-[12px]" />
             <figcaption>Vite</figcaption>
