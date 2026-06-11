@@ -29,7 +29,7 @@ import rolldownIcon from '@assets/icons/rolldown-light.svg';
           </figure>
         </a>
         <span>/</span>
-        <a href="https://tsdown.dev/" target="_blank"> tsdown </a>
+        <a href="https://tsdown.ru/" target="_blank"> tsdown </a>
       </div>
     </div>
     <div class="flex flex-col">
