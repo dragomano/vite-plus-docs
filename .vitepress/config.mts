@@ -8,15 +8,15 @@ import { withMermaid } from 'vitepress-plugin-mermaid';
 
 const taskRunnerGuideItems = [
   {
-    text: 'Run',
+    text: 'vp run',
     link: '/guide/run',
   },
   {
-    text: 'Task Caching',
+    text: 'Кэширование задач',
     link: '/guide/cache',
   },
   {
-    text: 'Running Binaries',
+    text: 'Запуск бинарных файлов',
     link: '/guide/vpx',
   },
 ];
@@ -36,27 +36,27 @@ const guideSidebar = [
   {
     text: 'Разработка',
     items: [
-      { text: 'Dev', link: '/guide/dev' },
+      { text: 'vp dev', link: '/guide/dev' },
       {
-        text: 'Check',
+        text: 'vp check',
         link: '/guide/check',
         items: [
-          { text: 'Lint', link: '/guide/lint' },
-          { text: 'Format', link: '/guide/fmt' },
+          { text: 'vp lint', link: '/guide/lint' },
+          { text: 'vp fmt', link: '/guide/fmt' },
         ],
       },
-      { text: 'Тестирование', link: '/guide/test' },
+      { text: 'vp test', link: '/guide/test' },
     ],
   },
   {
-    text: 'Execute',
+    text: 'Выполнение',
     items: taskRunnerGuideItems,
   },
   {
     text: 'Сборка',
     items: [
-      { text: 'Build', link: '/guide/build' },
-      { text: 'Pack', link: '/guide/pack' },
+      { text: 'vp build', link: '/guide/build' },
+      { text: 'vp pack', link: '/guide/pack' },
     ],
   },
   {
@@ -70,10 +70,10 @@ const guideSidebar = [
     text: 'Рабочий процесс',
     items: [
       { text: 'Интеграция с IDE', link: '/guide/ide-integration' },
-      { text: 'CI', link: '/guide/ci' },
-      { text: 'Commit Hooks', link: '/guide/commit-hooks' },
-      { text: 'Monorepo Guide', link: '/guide/monorepo' },
-      { text: 'Troubleshooting', link: '/guide/troubleshooting' },
+      { text: 'Непрерывная интеграция', link: '/guide/ci' },
+      { text: 'Хуки коммитов', link: '/guide/commit-hooks' },
+      { text: 'Монорепозиторий', link: '/guide/monorepo' },
+      { text: 'Решение проблем', link: '/guide/troubleshooting' },
     ],
   },
 ];
@@ -129,7 +129,7 @@ export default extendConfig(
         plugins: [
           groupIconVitePlugin({
             customIcon: {
-              tsdown: 'https://tsdown.dev/tsdown.svg',
+              tsdown: 'https://tsdown.ru/tsdown.svg',
             },
           }),
         ],
@@ -305,6 +305,14 @@ export default extendConfig(
       markdown: {
         config(md) {
           md.use(groupIconMdPlugin);
+        },
+        container: {
+          dangerLabel: 'ОПАСНОСТЬ',
+          detailsLabel: 'ПОДРОБНОСТИ',
+          importantLabel: 'ВАЖНО',
+          infoLabel: 'ИНФОРМАЦИЯ',
+          tipLabel: 'СОВЕТ',
+          warningLabel: 'ПРЕДУПРЕЖДЕНИЕ',
         },
       },
     }),
