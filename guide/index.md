@@ -1,6 +1,6 @@
 # Первые шаги {#getting-started}
 
-Vite+ — это унифицированный инструментарий и точка входа для веб-разработки. Он управляет вашей средой выполнения, менеджером пакетов и фронтенд-инструментарием в одном месте, объединяя [Vite](https://vite-docs.ru/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.dev/) и [Vite Task](https://github.com/voidzero-dev/vite-task).
+Vite+ — это унифицированный инструментарий и точка входа для веб-разработки. Он управляет вашей средой выполнения, менеджером пакетов и фронтенд-инструментарием в одном месте, объединяя [Vite](https://vite-docs.ru/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.ru/) и [Vite Task](https://github.com/voidzero-dev/vite-task).
 
 Vite+ поставляется в двух частях: `vp` — глобальный инструмент командной строки и `vite-plus` — локальный пакет, устанавливаемый в каждом проекте. Если у вас уже есть проект на Vite, используйте [`vp migrate`](/guide/migrate) для миграции его в Vite+ или вставьте наш [промпт миграции](/guide/migrate#migration-prompt) в вашего AI-агента.
 
