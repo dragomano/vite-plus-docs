@@ -252,10 +252,10 @@ export default extendConfig(
           copyright: `© ${new Date().getFullYear()} VoidZero Inc. и контрибьюторы Vite+.`,
           nav: [
             {
-              title: 'Компании',
+              title: 'Экосистема',
               items: [
                 { text: 'VoidZero', link: 'https://voidzero.dev' },
-                { text: 'Vite', link: 'https://vite.dev' },
+                { text: 'Vite', link: 'https://vite-docs.ru' },
                 { text: 'Vitest', link: 'https://vitest.dev' },
                 { text: 'Rolldown', link: 'https://rolldown.rs' },
                 { text: 'Oxc', link: 'https://oxc.rs' },
