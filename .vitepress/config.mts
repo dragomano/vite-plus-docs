@@ -103,8 +103,21 @@ export default extendConfig(
       ],
       vite: {
         build: {
-          chunkSizeWarningLimit: 1000,
+          chunkSizeWarningLimit: 1200,
           rollupOptions: {
+            output: {
+              manualChunks(id) {
+                const p = id.replace(/\\/g, '/')
+
+                if (
+                  /\/node_modules\/(@vue\/|vue\/)/.test(p) ||
+                  /\/node_modules\/vitepress\//.test(p) ||
+                  p.includes('.vitepress/theme')
+                ) {
+                  return 'app'
+                }
+              }
+            },
             onwarn(warning, warn) {
               if (warning.code === 'INVALID_ANNOTATION') {
                 return
@@ -271,7 +284,7 @@ export default extendConfig(
         },
       },
       transformHead({ page, pageData }) {
-        const url = 'https://viteplus.dev/' + page.replace(/\.md$/, '').replace(/index$/, '');
+        const url = 'https://plus.vite-docs.ru/' + page.replace(/\.md$/, '').replace(/index$/, '');
 
         const canonicalUrlEntry: HeadConfig = [
           'link',
@@ -287,7 +300,7 @@ export default extendConfig(
             'meta',
             {
               property: 'og:image',
-              content: `https://viteplus.dev/${pageData.frontmatter.cover ?? 'og.jpg'}`,
+              content: `https://plus.vite-docs.ru/${pageData.frontmatter.cover ?? 'og.jpg'}`,
             },
           ],
           ['meta', { property: 'og:url', content: url }],
