@@ -10,10 +10,11 @@ export default defineConfig({
   build: {},
   preview: {},
 
-  test: {},
-  lint: {},
-  fmt: {},
+  create: {},
   run: {},
+  fmt: {},
+  lint: {},
+  test: {},
   pack: {},
   staged: {},
 });
@@ -23,9 +24,10 @@ export default defineConfig({
 
 Vite+ расширяет базовую конфигурацию Vite следующими дополнениями:
 
-- [`lint`](/config/lint) для Oxlint
+- [`create`](/config/create) — настройки по умолчанию для создания проектов и шаблонов
+- [`run`](/config/run) — для Vite Task
 - [`fmt`](/config/fmt) для Oxfmt
+- [`lint`](/config/lint) для Oxlint
 - [`test`](/config/test) для Vitest
-- [`run`](/config/run) для Vite Task
 - [`pack`](/config/pack) для tsdown
 - [`staged`](/config/staged) для проверок индексированных файлов
