@@ -104,10 +104,11 @@ Vite+ может полностью управлять циклом локаль
 ### Выполнение {#execute}
 
 - [`vp run`](/guide/run) запускает задачи по рабочим пространствам с кэшированием.
-- [`vp cache clean`](/guide/cache) очищает записи кэша задач.
-- [`vpx`](/guide/vpx) скачивает и запускает бинарные файлы глобально.
 - [`vp exec`](/guide/vpx) запускает бинарные файлы из локального проекта.
-- [`vp dlx`](/guide/vpx) скачивает и запускает бинарные файлы пакетов без добавления их в зависимости.
+- [`vp node`](/guide/env) запускает Node.js-скрипты в текущем разрешённом окружении Vite+.
+- [`vp dlx`](/guide/vpx) загружает и запускает бинарные файлы пакетов без добавления их в зависимости.
+- [`vp cache clean`](/guide/cache) очищает записи кэша задач.
+- [`vpx`](/guide/vpx) загружает и запускает бинарные файлы глобально.
 
 ### Сборка {#build}
 
@@ -117,7 +118,8 @@ Vite+ может полностью управлять циклом локаль
 
 ### Управление зависимостями {#manage-dependencies}
 
-- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp why`](/guide/install) и [`vp info`](/guide/install) оборачивают рабочие процессы менеджера пакетов.
+- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp list`](/guide/install), [`vp why`](/guide/install) и [`vp info`](/guide/install) предоставляют обёртки над типовыми сценариями работы менеджеров пакетов.
+- [`vp link`](/guide/install), [`vp unlink`](/guide/install) и [`vp rebuild`](/guide/install) работают с локальными ссылками на пакеты. Они также выполняют пересборку нативных модулей.
 - [`vp pm <command>`](/guide/install) напрямую вызывает команды другого менеджера пакетов.
 
 ### Обслуживание {#maintain}
