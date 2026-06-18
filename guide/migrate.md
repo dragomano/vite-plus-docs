@@ -75,8 +75,8 @@ Migrate this project to Vite+. Vite+ replaces the current split tooling around r
 After the migration:
 
 - Confirm `vite` imports were rewritten to `vite-plus` where needed
-- Confirm `vitest` imports were rewritten to `vite-plus/test` where needed
-- On pnpm, keep the `vite` / `vitest` entries that `vp migrate` aliased to the Vite+ packages so the workspace override stays effective; with other package managers you can remove them once those rewrites are confirmed
+- Confirm `vitest` imports were rewritten to `vite-plus/test` (and `@vitest/browser*` to `vite-plus/test/browser*`) where needed
+- Remove old `vite`, `vitest`, and `@vitest/browser*` dependencies only after those rewrites are confirmed — `vite-plus` ships them as direct deps
 - Move remaining tool-specific config into the appropriate blocks in `vite.config.ts`
 
 Command mapping to keep in mind:
@@ -96,19 +96,29 @@ Summarize the migration at the end and report any manual follow-up still require
 
 ### Vitest
 
-Vitest автоматически мигрируется через `vp migrate`. Если вы выполняете миграцию вручную, вам нужно обновить все импорты на `vite-plus/test` вместо этого:
+Vitest автоматически мигрируется через `vp migrate`. Пакет `vite-plus` реэкспортирует исходный `vitest@4.x` через пространство имён `vite-plus/test*`, поэтому для тестов в режиме Node.js достаточно установить только `vite-plus` — отдельно устанавливать `vitest` больше не требуется.
+
+С браузерным режимом ситуация несколько сложнее. `vite-plus` включает базовую среду выполнения браузерного режима (`@vitest/browser`) и провайдер предпросмотра (`@vitest/browser-preview`), однако провайдеры **Playwright** и **WebdriverIO** остаются опциональными: `@vitest/browser-playwright` (вместе с peer-зависимостью `playwright`) и `@vitest/browser-webdriverio` (вместе с peer-зависимостью `webdriverio`) **не** входят в состав `vite-plus`, чтобы проекты без браузерных тестов не подтягивали их автоматически. `vp migrate` определяет фактически используемый провайдер и добавляет его — зафиксированным на версии Vitest, поставляемой в комплекте, — вместе с соответствующим фреймворком. Если вы выполняете миграцию вручную и используете один из этих провайдеров, установите пакет провайдера и соответствующий ему фреймворк самостоятельно, чтобы импорты `vite-plus/test/browser-playwright` или `vite-plus/test/browser-webdriverio` могли быть корректно разрешены.
+
+Если вы выполняете миграцию вручную, обновите все импорты на `vite-plus/test*`:
 
 ```ts
 // до
+import { defineConfig } from 'vitest/config';
 import { describe, expect, it, vi } from 'vitest';
+import { playwright } from '@vitest/browser-playwright';
 
 const { page } = await import('@vitest/browser/context');
 
 // после
+import { defineConfig } from 'vite-plus';
 import { describe, expect, it, vi } from 'vite-plus/test';
+import { playwright } from 'vite-plus/test/browser-playwright';
 
 const { page } = await import('vite-plus/test/browser/context');
 ```
+
+Аугментации `declare module 'vitest'` и `declare module '@vitest/browser*'` намеренно **не** переписываются — `vite-plus/test*` представляет собой тонкий реэкспорт исходных модулей `vitest*`, поэтому для корректного объединения типов аугментации должны ссылаться на исходный идентификатор модуля. Оставьте такие объявления `declare module` направленными на `'vitest'` и `'@vitest/browser*'`.
 
 ### tsdown
 

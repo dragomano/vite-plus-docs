@@ -14,8 +14,10 @@
 ## Глобальная команда `vp` {#global-vp}
 
 ```bash
-vp upgrade              # обновить до последней версии
-vp upgrade --check      # проверить наличие обновлений без установки
+vp upgrade                        # обновить до последней версии
+vp upgrade --check                # проверить наличие обновлений без установки
+vp upgrade <version>              # установить указанную версию
+vp upgrade --registry <registry>  # использовать пользовательский npm-реестр
 ```
 
 ### Откат {#rollback}
@@ -40,21 +42,38 @@ vp update vite-plus
 
 ### Обновление пакетов с алиасами {#updating-aliased-packages}
 
-Во время установки Vite+ настраивает npm-алиасы для своих основных пакетов:
+Во время установки Vite+ настраивает npm-алиас для своего основного пакета:
 
 - `vite` использует алиас `npm:@voidzero-dev/vite-plus-core@latest`
-- `vitest` использует алиас `npm:@voidzero-dev/vite-plus-test@latest`
 
-Команда `vp update vite-plus` не выполняет повторное разрешение этих алиасов в lock-файле. Для полного обновления обновите их отдельно:
+Команда `vp update vite-plus` не выполняет повторное разрешение этого алиаса в lock-файле. Для полного обновления обновите его отдельно:
 
 ```bash
-vp update @voidzero-dev/vite-plus-core @voidzero-dev/vite-plus-test
+vp update @voidzero-dev/vite-plus-core
 ```
 
 Либо обновите всё сразу:
 
 ```bash
-vp update vite-plus @voidzero-dev/vite-plus-core @voidzero-dev/vite-plus-test
+vp update vite-plus @voidzero-dev/vite-plus-core
 ```
 
 С помощью `vp outdated` можно проверить, что среди пакетов Vite+ больше не осталось устаревших версий.
+
+### Обновление закреплённой версии Vitest {#updating-the-vitest-pin}
+
+Если вы выполняли миграцию через `vp migrate`, в проекте используется точная закреплённая версия (`pin`) `vitest`, чтобы весь проект работал с единственной копией Vitest, общей с поставляемым в комплекте раннером `vp test`. Эта закреплённая версия хранится в блоке переопределений вашего менеджера пакетов:
+
+- **npm / Bun:** запись `vitest` в секции `overrides` файла `package.json`
+- **Yarn:** запись `vitest` в секции `resolutions` файла `package.json`
+- **pnpm:** запись `vitest` в секции `overrides` файла `pnpm-workspace.yaml` — если только ваш `package.json` уже не содержит поле `pnpm`; в этом случае запись находится в `pnpm.overrides` внутри `package.json` (pnpm игнорирует переопределения из `pnpm-workspace.yaml`, если в `package.json` определён блок `pnpm.overrides`)
+
+Новый релиз Vite+ может обновить поставляемую в комплекте версию Vitest. Поскольку закреплённая версия также применяется к собственной зависимости `vitest` пакета `vite-plus`, устаревшая запись продолжит устанавливать предыдущую версию раннера даже после обновления `vite-plus`. В результате внутренние механизмы Vitest (моки, `expect`, состояние раннера) окажутся разделены между закреплённой копией и той, которую загружает `vp test`.
+
+После обновления `vite-plus` повторно закрепите `vitest` на версии, которая теперь поставляется вместе с Vite+. Узнать эту версию можно командой:
+
+```bash
+vp --version
+```
+
+Затем укажите эту точную версию в переопределении `vitest` или повторно запустите `vp migrate`, чтобы обновить закреплённую версию автоматически.
