@@ -4,3 +4,5 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - reka-ui@2.9.9
   - reka-ui@2.9.10
+  - '@oxc-minify/*'
+  - oxc-minify@0.138.0
