@@ -177,8 +177,8 @@ vp rebuild -- --update-binary
 
 ```bash
 vp pm config get registry
-vp pm cache clean --force
-vp pm exec tsc --version
+vp pm cache clean -- --force
+vp pm audit --json
 ```
 
 #### Поэтапная публикация {#staged-publishing}
