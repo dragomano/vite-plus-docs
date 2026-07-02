@@ -71,6 +71,7 @@ const guideSidebar = [
     items: [
       { text: 'Интеграция с IDE', link: '/guide/ide-integration' },
       { text: 'Непрерывная интеграция', link: '/guide/ci' },
+      { text: 'Docker', link: '/guide/docker' },
       { text: 'Хуки коммитов', link: '/guide/commit-hooks' },
       { text: 'Монорепозиторий', link: '/guide/monorepo' },
       { text: 'Решение проблем', link: '/guide/troubleshooting' },
