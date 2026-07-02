@@ -5,7 +5,7 @@
       "npmPackage": "vite",
       "githubRepo": "vitejs/vite",
       "npmWeeklyDownloads": 140977733,
-      "githubStargazers": 81702,
+      "githubStargazers": 81659,
       "npmWeeklyDownloadsDisplay": "140m+",
       "githubStarsDisplay": "81.7k"
     },
@@ -14,7 +14,7 @@
       "npmPackage": "vitest",
       "githubRepo": "vitest-dev/vitest",
       "npmWeeklyDownloads": 68928372,
-      "githubStargazers": 16783,
+      "githubStargazers": 16788,
       "npmWeeklyDownloadsDisplay": "68m+",
       "githubStarsDisplay": "16.8k"
     },
@@ -23,7 +23,7 @@
       "npmPackage": "oxlint",
       "githubRepo": "oxc-project/oxc",
       "npmWeeklyDownloads": 10116174,
-      "githubStargazers": 21781,
+      "githubStargazers": 21799,
       "npmWeeklyDownloadsDisplay": "10m+",
       "githubStarsDisplay": "21.8k"
     }
