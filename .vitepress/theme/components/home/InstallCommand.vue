@@ -55,7 +55,7 @@ onBeforeUnmount(() => {
   >
     <div class="px-5 py-6 sm:p-10 flex flex-col gap-4 justify-center">
       <span class="text-grey text-xs font-mono uppercase tracking-wide">Начало работы</span>
-      <h4>Установите vp глобально</h4>
+      <h4>Глобальная установка</h4>
       <p class="max-w-[28rem] text-pretty">
         Установите Vite+ один раз, откройте новую сессию терминала, затем выполните <code>vp help</code>.
       </p>
