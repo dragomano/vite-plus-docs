@@ -14,6 +14,10 @@ const taskRunnerGuideItems = [
   {
     text: 'Кэширование задач',
     link: '/guide/cache',
+    items: [
+      { text: 'Автоматическое отслеживание данных', link: '/guide/automatic-data-tracking' },
+      { text: 'Кэш GitHub Actions', link: '/guide/github-actions-cache' },
+    ],
   },
   {
     text: 'Запуск бинарных файлов',

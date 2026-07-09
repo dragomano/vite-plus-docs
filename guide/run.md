@@ -69,7 +69,7 @@ $ node compile-legacy-app.js ✗ cache miss: 'legacy/index.js' modified, executi
 
 ## Определение задач {#task-definitions}
 
-Vite Task автоматически отслеживает, какие файлы использует ваша команда. Вы можете определять задачи непосредственно в `vite.config.ts`, чтобы включить кэширование по умолчанию или управлять тем, какие файлы и переменные окружения влияют на поведение кэша.
+Vite Task [автоматически отслеживает](/guide/automatic-data-tracking), какие данные необходимы каждой задаче для кэширования. Вы можете определять задачи непосредственно в `vite.config.ts`, чтобы включить кэширование по умолчанию или указать, какие файлы и переменные окружения должны влиять на работу кэша.
 
 ```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
@@ -102,10 +102,40 @@ export default defineConfig({
 
 ## Зависимости задач {#task-dependencies}
 
-Используйте [`dependsOn`](/config/run#dependson), чтобы запускать задачи в правильном порядке. При выполнении `vp run deploy` с конфигурацией выше сначала будут выполнены `build` и `test`. Зависимости также могут ссылаться на задачи из других пакетов того же проекта с помощью нотации `package#task`:
+Используйте [`dependsOn`](/config/run#dependson), чтобы запускать задачи в правильном порядке. При использовании приведённой выше конфигурации команда `vp run deploy` сначала выполнит задачи `build` и `test`.
+
+Строковые имена задач в `dependsOn` позволяют ссылаться на задачи в текущем или другом пакете:
 
 ```ts [vite.config.ts]
-dependsOn: ['@my/core#build', '@my/utils#lint'];
+dependsOn: [
+  'build', // тот же пакет
+  '@my/core#build', // другой пакет
+];
+```
+
+Используйте объектную форму, если нужно сослаться на все задачи с указанным именем из зависимостей текущего пакета:
+
+```ts [vite.config.ts]
+import { defineConfig } from 'vite-plus';
+
+export default defineConfig({
+  run: {
+    tasks: {
+      test: {
+        command: 'vp test',
+        dependsOn: [{ task: 'build', from: 'dependencies' }],
+      },
+    },
+  },
+});
+```
+
+В этом примере команда `vp run test` проверяет `dependencies` текущего пакета. Для каждой прямой зависимости рабочего пространства, в которой определена задача `build`, Vite Task запускает задачу `build` этой зависимости перед выполнением `test`.
+
+Используйте массив, если необходимо учитывать несколько полей зависимостей:
+
+```ts [vite.config.ts]
+dependsOn: [{ task: 'build', from: ['dependencies', 'devDependencies'] }];
 ```
 
 ## Выполнение в рабочем пространстве {#running-in-a-workspace}

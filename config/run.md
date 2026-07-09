@@ -120,8 +120,10 @@ tasks: {
 
 ### `dependsOn`
 
-- **Тип:** `string[]`
+- **Тип:** `Array<string | { task: string, from: DependsOnFrom }>`
 - **По умолчанию:** `[]`
+
+Параметр `from` принимает типы зависимостей `"dependencies"`, `"devDependencies"`, `"peerDependencies"` или массив этих значений, например `["dependencies", "devDependencies"]`.
 
 Список задач, которые должны успешно завершиться до запуска текущей задачи.
 
@@ -139,6 +141,19 @@ tasks: {
 ```ts [vite.config.ts]
 dependsOn: ['@my/core#build', '@my/utils#lint'];
 ```
+
+Используйте объектную форму `{ task: string, from: DependsOnFrom }`, чтобы ссылаться на задачи из всех зависимостей:
+
+```ts [vite.config.ts]
+tasks: {
+  test: {
+    command: 'vp test',
+    dependsOn: [{ task: 'build', from: ['dependencies', 'devDependencies'] }],
+  },
+}
+```
+
+В приведённом выше примере Vite Task анализирует прямые `dependencies` и `devDependencies` пакета, в котором объявлена задача, и запускает задачу `build` в каждой зависимости, где она определена. Пакеты без задачи `build` пропускаются.
 
 Подробности о взаимодействии явных и топологических зависимостей см. в разделе [Зависимости задач](/guide/run#task-dependencies).
 
@@ -168,17 +183,19 @@ tasks: {
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     env: ['NODE_ENV'],
   },
 }
 ```
 
-Поддерживаются шаблоны с подстановочными символами: `VITE_*` соответствует всем переменным, начинающимся с `VITE_`.
+Поддерживаются шаблоны с подстановочными знаками и шаблоны-исключения с `!`: `VITE_*` соответствует всем переменным, начинающимся с `VITE_`, а `!VITE_SECRET` исключает переменную `VITE_SECRET` из совпадения.
+
+Для `vp build` Vite сообщает о переменных окружения Vite через [автоматическое отслеживание](/guide/automatic-data-tracking#cooperative-tracking). Не добавляйте сюда `VITE_*` или `NODE_ENV` для стандартной сборки Vite, если только в вашем проекте нет дополнительной логики сборки, которую Vite не может отслеживать.
 
 ```bash
 $ NODE_ENV=development vp run build    # первый запуск
-$ NODE_ENV=production vp run build     # промах кэша: значение переменной изменилось
+$ NODE_ENV=production vp run build     # промах кэша: значение env 'NODE_ENV' изменилось
 ```
 
 ### `untrackedEnv`
@@ -191,13 +208,17 @@ $ NODE_ENV=production vp run build     # промах кэша: значение
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     untrackedEnv: ['CI', 'GITHUB_ACTIONS'],
   },
 }
 ```
 
-Набор распространённых переменных окружения автоматически передаётся всем задачам:
+`untrackedEnv` принимает те же шаблоны с подстановочными знаками и шаблоны-исключения с `!`, что и [`env`](#env).
+
+Не добавляйте переменную в `untrackedEnv`, если её значение влияет на результат выполнения задачи. Если инструмент отчётности о кэше отслеживает переменную через [автоматическое отслеживание](/guide/automatic-data-tracking#cooperative-tracking), не добавляйте её ни в `env`, ни в `untrackedEnv`.
+
+Vite Task передаёт набор общих переменных окружения всем задачам:
 
 - **Системные:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
 - **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
@@ -209,7 +230,7 @@ tasks: {
 - **Тип:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **По умолчанию:** `[{ auto: true }]` (определяется автоматически)
 
-Vite Task автоматически определяет, какие файлы используются командой (см. раздел [Автоматическое отслеживание файлов](/guide/cache#automatic-file-tracking)). Параметр `input` позволяет явно включать или исключать определённые файлы.
+Vite Task автоматически определяет, какие файлы использует команда. Подробности и случаи, когда необходимо добавить ручную настройку, см. в разделе [Автоматическое отслеживание данных](/guide/automatic-data-tracking).
 
 **Исключение файлов** из автоматического отслеживания:
 
@@ -270,16 +291,31 @@ tasks: {
 
 ### `output`
 
-- **Тип:** `Array<string | { pattern: string, base: "workspace" | "package" }>`
-- **По умолчанию:** `[]` (ничего не архивируется)
+- **Тип:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
+- **По умолчанию:** автоматическое отслеживание записи
 
-Файлы, создаваемые задачей. После успешного выполнения они архивируются, а при попадании в кэш восстанавливаются автоматически, поэтому их не нужно пересобирать. Если оставить список пустым (или не указывать его), архивирование выполняться не будет.
+Vite Task автоматически архивирует файлы, созданные при успешном выполнении задачи, и восстанавливает их при попадании в кэш.
+
+Если `output` не указан, Vite Task использует автоматическое отслеживание записи для выбора этих файлов. Добавьте явные записи `output`, если необходимо изменить набор файлов, которые будут восстанавливаться.
 
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     output: ['dist/**', '!dist/cache/**'],
+  },
+}
+```
+
+Используйте `{ auto: true }`, чтобы сохранить автоматическое отслеживание записи и одновременно добавить явные шаблоны выходных файлов.
+
+Это полезно, когда задача создаёт файлы, которые не должны восстанавливаться из кэша. Например, можно исключить файлы `.tsbuildinfo` TypeScript:
+
+```ts [vite.config.ts]
+tasks: {
+  typecheck: {
+    command: 'tsc --build',
+    output: [{ auto: true }, '!*.tsbuildinfo'],
   },
 }
 ```
@@ -289,7 +325,7 @@ tasks: {
 ```ts [vite.config.ts]
 tasks: {
   build: {
-    command: 'vp build',
+    command: 'node build.mjs',
     output: [
       'dist/**',
       { pattern: 'shared-artifacts/**', base: 'workspace' },
@@ -297,6 +333,19 @@ tasks: {
   },
 }
 ```
+
+Установите `output: []`, чтобы отключить восстановление выходных файлов для задачи, взятой из кэша:
+
+```ts [vite.config.ts]
+tasks: {
+  report: {
+    command: 'node scripts/report.mjs',
+    output: [],
+  },
+}
+```
+
+В отличие от `cache: false`, `output: []` по-прежнему позволяет Vite Task вычислять отпечаток задачи. При попадании в кэш Vite Task пропускает выполнение команды и воспроизводит её вывод в терминале. Используйте это для локальных кэшей, когда выходные файлы задачи уже существуют и не требуют восстановления.
 
 ### `cwd`
 
