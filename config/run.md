@@ -2,18 +2,15 @@
 
 Вы можете настроить Vite Task через раздел `run` в файле `vite.config.ts`. Подробнее о запуске скриптов и задач с помощью Vite+ см. в документации по [`vp run`](/guide/run).
 
+<!-- prettier-ignore -->
 ```ts [vite.config.ts]
 import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
   run: {
     enablePrePostScripts: true,
-    cache: {
-      /* ... */
-    },
-    tasks: {
-      /* ... */
-    },
+    cache: {/* ... */},
+    tasks: {/* ... */},
   },
 });
 ```
