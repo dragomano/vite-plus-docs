@@ -34,6 +34,7 @@ const guideSidebar = [
       { text: 'Переход на Vite+', link: '/guide/migrate' },
       { text: 'Установка зависимостей', link: '/guide/install' },
       { text: 'Окружение', link: '/guide/env' },
+      { text: 'Переменные окружения установщика', link: '/guide/installer-env-vars' },
       { text: 'Почему Vite+', link: '/guide/why' },
     ],
   },
