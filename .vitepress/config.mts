@@ -120,19 +120,6 @@ export default extendConfig(
         build: {
           chunkSizeWarningLimit: 1200,
           rollupOptions: {
-            output: {
-              manualChunks(id) {
-                const p = id.replace(/\\/g, '/')
-
-                if (
-                  /\/node_modules\/(@vue\/|vue\/)/.test(p) ||
-                  /\/node_modules\/vitepress\//.test(p) ||
-                  p.includes('.vitepress/theme')
-                ) {
-                  return 'app'
-                }
-              }
-            },
             onwarn(warning, warn) {
               if (warning.code === 'INVALID_ANNOTATION') {
                 return

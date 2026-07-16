@@ -19,11 +19,11 @@
     "vue3-carousel": "^0.17.0"
   },
   "devDependencies": {
-    "@types/node": "^25.9.4",
-    "@voidzero-dev/vitepress-theme": "4.8.4",
-    "oxc-minify": "^0.138.0",
+    "@types/node": "^26.1.1",
+    "@voidzero-dev/vitepress-theme": "5.0.2",
+    "oxc-minify": "^0.140.0",
     "tailwindcss": "^4.3.2",
-    "vitepress": "2.0.0-alpha.17"
+    "vitepress": "2.0.0-alpha.18"
   },
   "packageManager": "pnpm@11.5.1"
 }
