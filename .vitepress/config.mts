@@ -31,7 +31,11 @@ const guideSidebar = [
     items: [
       { text: 'Первые шаги', link: '/guide/' },
       { text: 'Создание проекта', link: '/guide/create' },
-      { text: 'Переход на Vite+', link: '/guide/migrate' },
+      {
+        text: 'Переход на Vite+',
+        link: '/guide/migrate',
+        items: [{ text: 'Правила миграции', link: '/guide/migrate-rules' }],
+      },
       { text: 'Установка зависимостей', link: '/guide/install' },
       { text: 'Окружение', link: '/guide/env' },
       { text: 'Переменные окружения установщика', link: '/guide/installer-env-vars' },

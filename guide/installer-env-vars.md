@@ -81,7 +81,7 @@
 
 - **Назначение**: URL зеркала дистрибутивов Node.js
 - **По умолчанию**: `https://nodejs.org/dist`
-- **Подробнее**: [Пользовательское зеркало Node.js](/guide/env#custom-nodejs-mirror)
+- **Подробнее**: [Пользовательское зеркало Node.js](/guide/env#custom-node-js-mirror)
 
 ### `VP_NODE_VERSION`
 
@@ -98,7 +98,7 @@
 - **Назначение**: пропускает проверку PGP-подписи загружаемых файлов Node.js
 - **Значения**: любое непустое значение
 - **По умолчанию**: отсутствует (проверка включена)
-- **Подробнее**: [Проверка подписи Node.js](/guide/env#nodejs-signature-verification)
+- **Подробнее**: [Проверка подписи Node.js](/guide/env#node-js-signature-verification)
 
 ### `VP_SHELL`
 
