@@ -45,7 +45,7 @@ vp migrate my-app
 - Обновляет зависимости проекта
 - Переписывает импорты при необходимости
 - Объединяет конфигурации отдельных инструментов в `vite.config.ts`
-- Обновляет скрипты на командный интерфейс Vite+
+- Обновляет сценарии на командный интерфейс Vite+
 - Может настроить хуки коммитов
 - Может записать конфигурационные файлы агента и редактора
 - Форматирует мигрированный проект
@@ -85,7 +85,7 @@ After the migration:
 Command mapping to keep in mind:
 
 - `vp run <script>` is the equivalent of `pnpm run <script>`
-- `vp test` runs the built-in test command, while `vp run test` runs the `test` script from `package.json`
+- `vp dev` and `vp test` always run the built-ins; `vp run dev` and `vp run test` run the `dev` and `test` scripts from `package.json`
 - `vp install`, `vp add`, and `vp remove` delegate through the package manager declared by `packageManager`
 - `vp dev`, `vp build`, `vp preview`, `vp lint`, `vp fmt`, `vp check`, and `vp pack` replace the corresponding standalone tools
 - Prefer `vp check` for validation loops
@@ -175,7 +175,7 @@ export default defineConfig({
 
 Если ваш проект использует `lefthook`, `simple-git-hooks` или `yorkie`, `vp migrate` оставит существующую конфигурацию без изменений и выведет предупреждение. Это произойдёт даже в том случае, если вы согласитесь настроить хуки в интерактивном режиме или передадите флаг `--hooks`.
 
-Если вы хотите вручную перейти с одного из этих инструментов на Vite+, выполните следующие шаги. Сначала перенесите команды, выполняемые для индексированных файлов, в блок `staged` файла `vite.config.ts`. Затем обновите скрипт жизненного цикла так, чтобы он запускал `vp config`. После этого создайте хук Vite+ `.vite-hooks/pre-commit`, который будет запускать `vp staged`. Наконец, убедившись, что хук Vite+ работает корректно, удалите конфигурацию и зависимость старого инструмента.
+Если вы хотите вручную перейти с одного из этих инструментов на Vite+, выполните следующие шаги. Сначала перенесите команды, выполняемые для индексированных файлов, в блок `staged` файла `vite.config.ts`. Затем обновите сценарий жизненного цикла так, чтобы он запускал `vp config`. После этого создайте хук Vite+ `.vite-hooks/pre-commit`, который будет запускать `vp staged`. Наконец, убедившись, что хук Vite+ работает корректно, удалите конфигурацию и зависимость старого инструмента.
 
 Подробнее о полной настройке хуков Vite+ см. в [руководстве по хукам коммитов](/guide/commit-hooks).
 
