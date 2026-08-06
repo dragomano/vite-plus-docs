@@ -209,9 +209,6 @@ export default extendConfig(
           { icon: 'discord', link: 'https://discord.gg/cC6TEVFKSx' },
           { icon: 'bluesky', link: 'https://bsky.app/profile/voidzero.dev' },
         ],
-        outline: {
-          level: [2, 3],
-        },
         search: {
           provider: 'local',
           options: {
@@ -249,12 +246,17 @@ export default extendConfig(
           text: 'Предложить изменения',
         },
 
-        outlineTitle: 'Содержание',
+        outline: {
+          label: 'Содержание',
+          level: [2, 3],
+        },
         docFooter: {
           prev: 'Предыдущая страница',
           next: 'Следующая страница'
         },
-        lastUpdatedText: 'Обновлено',
+        lastUpdated: {
+          text: 'Обновлено',
+        },
         darkModeSwitchLabel: 'Оформление',
         lightModeSwitchTitle: 'Переключить на светлую тему',
         darkModeSwitchTitle: 'Переключить на тёмную тему',
