@@ -147,14 +147,14 @@ Vite+ устанавливает дополнительные переменны
 
 ## Логирование и отладка {#logging-and-debugging}
 
-### `VITE_LOG`
+### `VP_LOG`
 
 - **Назначение**: строка фильтрации логов для `tracing_subscriber`
 - **По умолчанию**: отсутствует
 - **Пример**:
   ```bash
-  VITE_LOG=debug vp dev
-  VITE_LOG=vite_task=trace vp build
+  VP_LOG=debug vp dev
+  VP_LOG=vt=trace vp build
   ```
 
 ### `VP_DEBUG_SHIM`
