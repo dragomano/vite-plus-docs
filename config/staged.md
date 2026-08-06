@@ -1,6 +1,6 @@
 # Конфигурация Staged {#staged-config}
 
-Команды `vp staged` и `vp config` читают правила для индексированных файлов из блока `staged` в файле `vite.config.ts`. Подробнее см. в руководстве [Хуки коммитов](/guide/commit-hooks).
+Команда `vp staged` считывает правила для индексируемых файлов из блока `staged` в `vite.config.ts`. См. руководство по [хукам коммитов](/guide/commit-hooks).
 
 ## Пример {#example}
 
