@@ -4,11 +4,11 @@
 
 ## Обзор {#overview}
 
-Для GitHub Actions рекомендуется использовать [`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp). Он устанавливает Vite+, настраивает необходимую версию Node.js и менеджер пакетов, а также может автоматически кэшировать установку зависимостей.
-
-Это означает, что в большинстве случаев вам не понадобятся отдельные шаги `setup-node`, настройка менеджера пакетов и ручная настройка кэширования зависимостей в вашем workflow-файле.
+[`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp) предоставляет интеграции для GitHub Actions и GitLab CI/CD. В обоих случаях выполняется установка Vite+ с возможностью установки зависимостей проекта. GitHub Action также может автоматически установить Node.js и настроить кэш пакетного менеджера, тогда как шаблон GitLab CI/CD использует среду выполнения Node.js и конфигурацию кэша, предоставленные заданием.
 
 ## GitHub Actions {#github-actions}
+
+GitHub Action автоматически устанавливает Vite+, необходимую версию Node.js и пакетный менеджер. Благодаря этому в большинстве случаев вам не понадобятся отдельные шаги `setup-node`, настройка пакетного менеджера или ручное кэширование зависимостей в рабочем процессе.
 
 ```yaml [.github/workflows/ci.yml]
 - uses: voidzero-dev/setup-vp@v1
@@ -22,6 +22,31 @@
 ```
 
 При использовании `cache: true` зависимостями автоматически управляет `setup-vp`, включая их кэширование.
+
+## GitLab CI/CD {#gitlab-ci-cd}
+
+Используйте повторно используемый удалённый шаблон `setup-vp` в конфигурации GitLab CI/CD:
+
+```yaml [.gitlab-ci.yml]
+include:
+  - remote: 'https://raw.githubusercontent.com/voidzero-dev/setup-vp/v1/gitlab/setup-vp.yml'
+
+test:
+  extends: .setup-vp
+  image: node:24
+  script:
+    - vp check
+    - vp test
+    - vp build
+```
+
+Интеграция с GitLab CI/CD отличается от GitHub Action несколькими особенностями:
+
+- Шаблон не устанавливает Node.js. Используйте образ с Node.js, как показано выше, либо другим способом обеспечьте наличие Node.js в задании.
+- Настройте кэширование зависимостей с помощью ключевого слова GitLab [`cache`](https://docs.gitlab.com/ci/yaml/#cache) в конфигурации задания.
+- Используйте среду выполнения на базе Unix с Bash и установленным `curl` или `wget`.
+
+Дополнительные параметры настройки и полное описание всех входных параметров см. в [документации `setup-vp` для GitLab CI/CD](https://github.com/voidzero-dev/setup-vp#gitlab-cicd).
 
 ## Упрощение существующих сценариев {#simplifying-existing-workflows}
 
