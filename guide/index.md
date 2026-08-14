@@ -93,6 +93,7 @@ Vite+ может полностью управлять циклом локаль
 - [`vp create`](/guide/create) создаёт новые приложения, пакеты и монорепозитории.
 - [`vp migrate`](/guide/migrate) переносит существующие проекты на Vite+.
 - [`vp config`](/guide/commit-hooks) устанавливает диспетчер Git-хуков и настраивает интеграцию с ИИ-агентами.
+- [`vp hooks`](/guide/commit-hooks) управляет диспетчером Git-хуков (`enable`, `disable`, `status`).
 - [`vp staged`](/guide/commit-hooks) запускает проверки для staged-файлов.
 - [`vp install`](/guide/install) устанавливает зависимости с помощью подходящего менеджера пакетов.
 - [`vp env`](/guide/env) управляет версиями Node.js.
