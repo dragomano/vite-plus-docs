@@ -43,8 +43,10 @@ export default defineConfig({
 - `typeAware: true` включает правила, которым требуется информация о типах TypeScript
 - `typeCheck: true` включает полноценную проверку типов во время линтинга
 
-Этот режим основан на [tsgolint](https://github.com/oxc-project/tsgolint), работающем поверх TypeScript Go toolchain. Он предоставляет Oxlint доступ к информации о типах и позволяет выполнять проверку типов напрямую через `vp lint` и `vp check`.
+Этот механизм работает на базе [tsgolint](https://github.com/oxc-project/tsgolint), использующего инструментарий TypeScript 7 (также известный как TypeScript Go). Он предоставляет Oxlint доступ к информации о типах и позволяет выполнять проверку типов непосредственно с помощью `vp lint` и `vp check`.
 
 ## JS-плагины {#js-plugins}
 
 Если вы переходите с ESLint и всё ещё зависите от нескольких важных ESLint-плагинов на JavaScript, Oxlint предоставляет [поддержку JS-плагинов](https://oxc.rs/docs/guide/usage/linter/js-plugins), которая поможет сохранить их работоспособность на время завершения миграции.
+
+JS-плагины также позволяют [писать собственные правила](https://oxc.rs/docs/guide/usage/linter/writing-js-plugins.html) для Oxlint.
