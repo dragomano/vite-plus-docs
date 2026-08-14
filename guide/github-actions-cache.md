@@ -63,6 +63,10 @@ vp run lint # должно вывести "cache hit"
 
 Восстанавливайте `node_modules/.vite/task-cache` после выполнения `vp install`, поскольку установка пакетов может создавать или изменять содержимое `node_modules`.
 
+Укажите ниже в `<setup-vp-version>` точную версию со [страницы релизов `setup-vp`](https://github.com/voidzero-dev/setup-vp/releases). Вместо неё можно указать SHA коммита.
+
+Подробнее о настройке Dependabot или Renovate см. в разделе [Автоматическое обновление версий](/guide/ci#automatic-version-updates).
+
 ```yaml [.github/workflows/ci.yml]
 name: CI
 
@@ -80,7 +84,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: voidzero-dev/setup-vp@v1
+      - uses: voidzero-dev/setup-vp@<setup-vp-version>
         with:
           node-version: '24'
           cache: true

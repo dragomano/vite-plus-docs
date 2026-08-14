@@ -178,11 +178,15 @@ vp migrate
 Используйте официальный экшен [`setup-vp`](https://github.com/voidzero-dev/setup-vp) для установки Vite+ в GitHub Actions:
 
 ```yaml
-- uses: voidzero-dev/setup-vp@v1
+- uses: voidzero-dev/setup-vp@<setup-vp-version>
   with:
     node-version: '22'
     cache: true
 ```
+
+Укажите в `<setup-vp-version>` точную версию со [страницы релизов `setup-vp`](https://github.com/voidzero-dev/setup-vp/releases). Вместо неё можно указать SHA коммита. Не используйте тег `v1`. Тег `v1` больше не обновляется.
+
+Подробнее о настройке Dependabot или Renovate см. в разделе [Автоматическое обновление версий](https://plus.vite-doc.ru/guide/ci#automatic-version-updates).
 
 #### Ручная установка и миграция
 

@@ -6,12 +6,43 @@
 
 [`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp) предоставляет интеграции для GitHub Actions и GitLab CI/CD. В обоих случаях выполняется установка Vite+ с возможностью установки зависимостей проекта. GitHub Action также может автоматически установить Node.js и настроить кэш пакетного менеджера, тогда как шаблон GitLab CI/CD использует среду выполнения Node.js и конфигурацию кэша, предоставленные заданием.
 
+## Версионирование setup-vp {#setup-vp-versioning}
+
+В каждом примере укажите в `<setup-vp-version>` точную версию со [страницы релизов `setup-vp`](https://github.com/voidzero-dev/setup-vp/releases). Вместо неё можно указать SHA коммита. Не используйте тег `v1`. Тег `v1` больше не обновляется.
+
+### Автоматическое обновление версий {#automatic-version-updates}
+
+Dependabot и Renovate могут обновлять точные версии в рабочих процессах GitHub Actions.
+
+Чтобы использовать [обновление версий Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-version-updates/configuring-dependabot-version-updates), добавьте запись `github-actions` в `.github/dependabot.yml`:
+
+```yaml [.github/dependabot.yml]
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+```
+
+Dependabot проверяет записи `uses:` в `.github/workflows` каждую неделю.
+
+[Менеджер GitHub Actions в Renovate](https://docs.renovatebot.com/modules/manager/github-actions/) по умолчанию обнаруживает записи `uses:`. Для `setup-vp` не нужно создавать отдельное правило для пакета.
+
+Если вы используете SHA коммита, добавьте точный тег релиза в комментарии. Renovate использует этот комментарий для поиска обновлений:
+
+```yaml
+- uses: voidzero-dev/setup-vp@<commit-sha> # <setup-vp-version>
+```
+
+Эти настройки применяются только к рабочим процессам GitHub Actions. Для GitLab CI/CD обновляйте оба значения версии одновременно.
+
 ## GitHub Actions {#github-actions}
 
 GitHub Action автоматически устанавливает Vite+, необходимую версию Node.js и пакетный менеджер. Благодаря этому в большинстве случаев вам не понадобятся отдельные шаги `setup-node`, настройка пакетного менеджера или ручное кэширование зависимостей в рабочем процессе.
 
 ```yaml [.github/workflows/ci.yml]
-- uses: voidzero-dev/setup-vp@v1
+- uses: voidzero-dev/setup-vp@<setup-vp-version>
   with:
     node-version: '24'
     cache: true
@@ -25,11 +56,13 @@ GitHub Action автоматически устанавливает Vite+, не�
 
 ## GitLab CI/CD {#gitlab-ci-cd}
 
-Используйте повторно используемый удалённый шаблон `setup-vp` в конфигурации GitLab CI/CD:
+Используйте повторно используемый удалённый шаблон `setup-vp` в конфигурации GitLab CI/CD. Укажите в URL удалённого шаблона и `setup-ref` один и тот же тег релиза или SHA коммита:
 
 ```yaml [.gitlab-ci.yml]
 include:
-  - remote: 'https://raw.githubusercontent.com/voidzero-dev/setup-vp/v1/gitlab/setup-vp.yml'
+  - remote: 'https://raw.githubusercontent.com/voidzero-dev/setup-vp/<setup-vp-version>/gitlab/setup-vp.yml'
+    inputs:
+      setup-ref: '<setup-vp-version>'
 
 test:
   extends: .setup-vp
@@ -76,7 +109,7 @@ test:
 #### После: {#after}
 
 ```yaml [.github/workflows/ci.yml]
-- uses: voidzero-dev/setup-vp@v1
+- uses: voidzero-dev/setup-vp@<setup-vp-version>
   with:
     node-version: '24'
     cache: true
