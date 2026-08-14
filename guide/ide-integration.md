@@ -26,7 +26,8 @@ Vite+ поддерживает VS Code и Zed через настройки, с�
   "[javascriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[typescript]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
   "[typescriptreact]": { "editor.defaultFormatter": "oxc.oxc-vscode" },
-  "oxc.fmt.configPath": "./vite.config.ts",
+  "oxc.disableNestedConfig": true,
+  "oxc.fmt.disableNestedConfig": true,
   "editor.formatOnSave": true,
   "editor.formatOnSaveMode": "file",
   "editor.codeActionsOnSave": {
@@ -35,7 +36,7 @@ Vite+ поддерживает VS Code и Zed через настройки, с�
 }
 ```
 
-Это задаёт для проекта общий форматтер по умолчанию и включает автоматические исправления средствами Oxc при сохранении. Блоки переопределения для конкретных языков (`[javascript]`, `[typescript]` и т. д.) необходимы, поскольку VS Code отдаёт приоритет пользовательским настройкам `[language]` над параметром рабочего пространства `editor.defaultFormatter`. Без них глобальная конфигурация Prettier будет незаметно перехватывать форматирование. Установка `oxc.fmt.configPath` в `./vite.config.ts` обеспечивает соответствие форматирования при сохранении блоку `fmt` в конфигурации Vite+. Vite+ использует `formatOnSaveMode: "file"`, поскольку Oxfmt не поддерживает частичное форматирование.
+Это задаёт единый форматтер по умолчанию для всего проекта и включает автоматическое исправление кода с помощью Oxc при сохранении. Блоки переопределения для отдельных языков (`[javascript]`, `[typescript]` и т. д.) необходимы, поскольку VS Code отдаёт приоритет пользовательским настройкам `[language]` перед настройкой `editor.defaultFormatter` на уровне рабочей области — без них глобальная конфигурация Prettier будет использоваться вместо заданного форматтера. Параметры `oxc.disableNestedConfig` и `oxc.fmt.disableNestedConfig` не позволяют вложенным конфигурациям Oxlint и Oxfmt отличаться от корневой конфигурации Vite+. Vite+ использует `formatOnSaveMode: "file"`, поскольку Oxfmt не поддерживает частичное форматирование.
 
 Чтобы панель NPM Scripts в VS Code запускала сценарии через `vp`, добавьте следующее в файл `.vscode/settings.json`:
 
@@ -99,3 +100,59 @@ Vite+ поддерживает VS Code и Zed через настройки, с�
 ```
 
 Установка `oxfmt.fmt.configPath` в `./vite.config.ts` обеспечивает соответствие форматирования при сохранении блоку `fmt` в конфигурации Vite+. Полная автоматически генерируемая конфигурация также охватывает дополнительные языки (CSS, HTML, JSON, Markdown и т. д.). Выполните `vp create` или `vp migrate`, чтобы автоматически создать полный файл конфигурации.
+
+## JetBrains (IntelliJ, WebStorm и др.) {#jetbrains-intellij-webstorm-etc}
+
+Для наилучшей работы Vite+ с IDE JetBrains, такими как IntelliJ и WebStorm, установите плагин [Oxc](https://plugins.jetbrains.com/plugin/27061-oxc) из магазина JetBrains.
+
+При создании или миграции проекта Vite+ предложит выбрать, хотите ли вы добавить конфигурацию редактора для IDE JetBrains.
+
+::: tip Vite+ не объединяет существующие файлы конфигурации
+Из-за некоторых сложностей с объединением XML-файлов Vite+ в настоящее время не объединяет существующие файлы конфигурации, если они уже присутствуют.
+Вместо объединения вам будет предложено заменить существующие файлы.
+:::
+
+Вы также можете вручную настроить конфигурацию IDE в соответствии с настройками Vite+:
+
+```xml [.idea/externalDependencies.xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ExternalDependencies">
+    <plugin id="com.github.oxc.project.oxcintellijplugin" />
+  </component>
+</project>
+```
+
+```xml [.idea/workspace.xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <!-- другие настройки... -->
+  <component name="PropertiesComponent">
+    <![CDATA[{
+      "keyToString": {
+        // другие настройки
+        "javascript.nodejs.core.library.configured.version": "24.18.0", // Замените на выбранную вами версию Node.js
+        "javascript.nodejs.core.library.typings.version": "24.13.3", // Замените на версию @types/node, соответствующую вашей версии Node.js (или удалите, если не хотите её указывать)
+        "javascript.preferred.runtime.type.id": "node",
+        "nodejs_interpreter_path": "$USER_HOME$/.vite-plus/bin/node",
+        "nodejs_package_manager_path": "pnpm" // Замените на выбранный вами пакетный менеджер
+      }
+    }]]>
+  </component>
+</project>
+```
+
+```xml [.idea/OxfmtSettings.xml]
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="OxfmtSettings">
+    <option name="preferOxfmtCodeStyleSettings" value="true" />
+  </component>
+</project>
+```
+
+Часто каталоги `.idea` добавляют в `.gitignore` проекта, включая файл `externalDependencies.xml`. Добавление файла `.idea/.gitignore` со следующим содержимым поможет гарантировать, что этот файл будет присутствовать:
+
+```gitignore [.idea/.gitignore]
+!externalDependencies.xml
+```
