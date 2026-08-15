@@ -151,8 +151,10 @@ Vite+ поддерживает VS Code и Zed через настройки, с�
 </project>
 ```
 
-Часто каталоги `.idea` добавляют в `.gitignore` проекта, включая файл `externalDependencies.xml`. Добавление файла `.idea/.gitignore` со следующим содержимым поможет гарантировать, что этот файл будет присутствовать:
+Часто каталоги `.idea` добавляют в `.gitignore` проекта, включая файл `externalDependencies.xml`, который используется для указания IDE, какие плагины следует использовать для рабочего пространства.
 
-```gitignore [.idea/.gitignore]
-!externalDependencies.xml
+Пожалуйста, добавьте эту строку в основной файл `.gitignore`, чтобы этот файл всегда включался в репозиторий:
+
+```gitignore [.gitignore]
+!.idea/externalDependencies.xml
 ```
