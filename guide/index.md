@@ -127,6 +127,7 @@ Vite+ может полностью управлять циклом локаль
 
 ### Обслуживание {#maintain}
 
+- [`vp toolchain`](/guide/upgrade#show-the-toolchain) отображает версии инструментов Vite+ и связи между ними
 - [`vp upgrade`](/guide/upgrade) обновляет саму установку `vp`.
 - [`vp implode`](/guide/implode) удаляет `vp` и связанные данные Vite+ с вашего компьютера.
 
