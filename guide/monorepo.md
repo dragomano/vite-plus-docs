@@ -24,7 +24,7 @@ export default defineConfig({
     overrides: [
       {
         files: ['apps/web/**', 'packages/ui/**'],
-        plugins: ['typescript', 'react'],
+        plugins: ['react'],
         rules: {
           'react/self-closing-comp': 'error',
         },
@@ -40,9 +40,9 @@ export default defineConfig({
       },
       {
         files: ['**/*.test.ts', '**/*.spec.ts'],
-        plugins: ['typescript', 'vitest'],
+        plugins: ['vitest'],
         rules: {
-          '@typescript-eslint/no-explicit-any': 'off',
+          'typescript/no-explicit-any': 'off',
           'vitest/no-disabled-tests': 'error',
         },
       },
@@ -54,7 +54,7 @@ export default defineConfig({
 Глобальные шаблоны разрешаются относительно корневого файла `vite.config.ts`, поэтому используйте пути рабочего пространства, такие как `apps/web/**`, `apps/api/**` и `packages/ui/**`.
 
 ::: tip
-Если запись в `lint.overrides` задаёт `plugins`, этот список полностью заменяет базовый список `lint.plugins` для соответствующих файлов. Указывайте все плагины, необходимые для данной группы файлов, например `['typescript', 'react']`. Не указывайте `plugins` только в том случае, если переопределение должно без изменений наследовать базовый список.
+Если в записи `lint.overrides` задан параметр `plugins`, этот список будет объединён с базовым списком `lint.plugins` для соответствующих файлов. Не указывайте `plugins`, только если в переопределении должен использоваться базовый список без изменений.
 :::
 
 ## Переопределения форматирования {#format-overrides}
@@ -240,9 +240,9 @@ export default {
 };
 ```
 
-### Скрипты пакетов и задачи всего рабочего пространства {#package-scripts-and-workspace-wide-tasks}
+### Сценарии пакетов и задачи всего рабочего пространства {#package-scripts-and-workspace-wide-tasks}
 
-Храните специфичные для каждого пакета скрипты внутри соответствующего пакета, если команда отличается для разных приложений:
+Храните специфичные для каждого пакета сценарии внутри соответствующего пакета, если команда отличается для разных приложений:
 
 ```json [apps/api/package.json]
 {
@@ -253,7 +253,7 @@ export default {
 }
 ```
 
-Запускайте скрипты во всём рабочем пространстве с помощью `vp run`:
+Запускайте сценарии во всём рабочем пространстве с помощью `vp run`:
 
 ```bash
 vp run -r build
