@@ -82,7 +82,7 @@ vp install -D vite-plus
 ```json
 "overrides": {
   "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "4.1.10"
+  "vitest": "4.1.11"
 }
 ```
 
@@ -91,7 +91,7 @@ vp install -D vite-plus
 ```yaml
 overrides:
   vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: 4.1.10
+  vitest: 4.1.11
 ```
 
 Или, если вы используете Yarn:
@@ -99,7 +99,7 @@ overrides:
 ```json
 "resolutions": {
   "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "4.1.10"
+  "vitest": "4.1.11"
 }
 ```
 

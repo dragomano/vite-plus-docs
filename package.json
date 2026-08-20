@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
-    "mermaid": "^11.16.1",
+    "mermaid": "^11.17.0",
     "reka-ui": "^2.10.3",
     "typewriter-effect": "^2.22.0",
     "vitepress-plugin-group-icons": "^1.7.6",
@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@types/node": "^26.2.0",
-    "@voidzero-dev/vitepress-theme": "5.0.5",
-    "oxc-minify": "^0.144.0",
+    "@voidzero-dev/vitepress-theme": "5.0.6",
+    "oxc-minify": "^0.146.0",
     "tailwindcss": "^4.3.3",
     "vitepress": "2.0.0-alpha.19"
   },
