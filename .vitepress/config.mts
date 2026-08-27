@@ -134,7 +134,11 @@ export default extendConfig(
           },
         },
         optimizeDeps: {
-          include: ['mermaid > @braintree/sanitize-url'],
+          include: [
+            'mermaid > @braintree/sanitize-url',
+            'mermaid > fastdom',
+            'mermaid > fastdom/extensions/fastdom-promised.js',
+          ],
         },
         resolve: {
           alias: [

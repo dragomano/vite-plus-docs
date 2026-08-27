@@ -1,20 +1,14 @@
 allowBuilds:
   esbuild: false
   vue-demi: false
+
 minimumReleaseAgeExclude:
   - reka-ui@2.9.9 || 2.9.10
   - '@oxc-minify/*'
   - oxc-minify@0.138.0 || 0.146.0
   - '@voidzero-dev/vitepress-theme@5.0.4'
-  - '@vue/compiler-core@3.5.41'
-  - '@vue/compiler-dom@3.5.41'
-  - '@vue/compiler-sfc@3.5.41'
-  - '@vue/compiler-ssr@3.5.41'
-  - '@vue/reactivity@3.5.41'
-  - '@vue/runtime-core@3.5.41'
-  - '@vue/runtime-dom@3.5.41'
-  - '@vue/server-renderer@3.5.41'
-  - '@vue/shared@3.5.41'
+  - '@vue/*'
   - vue@3.5.41
   - '@mermaid-js/parser@1.2.1'
   - mermaid@11.17.0
+  - '@types/node@26.4.0'
