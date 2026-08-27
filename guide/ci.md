@@ -4,7 +4,7 @@
 
 ## Обзор {#overview}
 
-[`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp) предоставляет интеграции для GitHub Actions и GitLab CI/CD. В обоих случаях выполняется установка Vite+ с возможностью установки зависимостей проекта. GitHub Action также может автоматически установить Node.js и настроить кэш пакетного менеджера, тогда как шаблон GitLab CI/CD использует среду выполнения Node.js и конфигурацию кэша, предоставленные заданием.
+[`voidzero-dev/setup-vp`](https://github.com/voidzero-dev/setup-vp) предоставляет интеграции для GitHub Actions, GitLab CI/CD и Azure Pipelines. Все три варианта устанавливают Vite+ и могут устанавливать зависимости проекта. GitHub Action и шаблон для Azure Pipelines также могут автоматически настроить Node.js и кэшировать данные менеджера пакетов, в то время как шаблон для GitLab CI/CD использует среду выполнения Node.js и конфигурацию кэша, предоставленные заданием.
 
 ## Версионирование setup-vp {#setup-vp-versioning}
 
@@ -35,7 +35,7 @@ Dependabot проверяет записи `uses:` в `.github/workflows` каж
 - uses: voidzero-dev/setup-vp@<commit-sha> # <setup-vp-version>
 ```
 
-Эти настройки применяются только к рабочим процессам GitHub Actions. Для GitLab CI/CD обновляйте оба значения версии одновременно.
+Эти настройки применяются только к рабочим процессам GitHub Actions. Для GitLab CI/CD и Azure Pipelines обновляйте оба значения версии одновременно.
 
 ## GitHub Actions {#github-actions}
 
@@ -80,6 +80,41 @@ test:
 - Используйте среду выполнения на базе Unix с Bash и установленным `curl` или `wget`.
 
 Дополнительные параметры настройки и полное описание всех входных параметров см. в [документации `setup-vp` для GitLab CI/CD](https://github.com/voidzero-dev/setup-vp#gitlab-cicd).
+
+## Azure Pipelines {#azure-pipelines}
+
+Используйте переиспользуемый шаблон шага `setup-vp` в конфигурации Azure Pipelines. Создайте подключение к GitHub с именем `github`, а затем подключите шаблон из репозитория `setup-vp`:
+
+```yaml [azure-pipelines.yml]
+resources:
+  repositories:
+    - repository: setupVp
+      type: github
+      endpoint: github
+      name: voidzero-dev/setup-vp
+      ref: refs/tags/<setup-vp-version>
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - checkout: self
+  - template: azure/setup-vp.yml@setupVp
+    parameters:
+      setupRef: '<setup-vp-version>'
+      nodeVersion: 24.x
+      cache: true
+      runInstall: true
+  - script: vp check
+  - script: vp test
+  - script: vp build
+```
+
+Зафиксируйте `ref` и `setupRef` на одном и том же теге или SHA коммита для строгой воспроизводимости.
+
+Шаблон для Azure Pipelines поддерживает агенты Microsoft-hosted на Linux, macOS и Windows. Для настройки Node.js и кэширования данных менеджера пакетов он использует встроенные задачи Azure `UseNode@1` и `Cache@2`.
+
+Для расширенной конфигурации и полного описания параметров см. [документацию `setup-vp` по Azure Pipelines](https://github.com/voidzero-dev/setup-vp#azure-pipelines).
 
 ## Упрощение существующих сценариев {#simplifying-existing-workflows}
 
