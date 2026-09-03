@@ -96,7 +96,7 @@ Vite+ может полностью управлять циклом локаль
 - [`vp hooks`](/guide/commit-hooks) управляет диспетчером Git-хуков (`enable`, `disable`, `status`).
 - [`vp staged`](/guide/commit-hooks) запускает проверки для staged-файлов.
 - [`vp install`](/guide/install) устанавливает зависимости с помощью подходящего менеджера пакетов.
-- [`vp env`](/guide/env) управляет версиями Node.js.
+- [`vp env`](/guide/env) управляет средами Node.js и менеджеров пакетов.
 
 ### Разработка {#develop}
 
