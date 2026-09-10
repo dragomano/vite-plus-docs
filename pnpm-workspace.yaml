@@ -11,4 +11,4 @@ minimumReleaseAgeExclude:
   - vue@3.5.41
   - '@mermaid-js/parser@1.2.1'
   - mermaid@11.17.0
-  - '@types/node@26.4.0'
+  - '@types/node@26.4.0 || 26.5.1'
