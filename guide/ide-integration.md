@@ -82,10 +82,22 @@ Vite+ поддерживает VS Code и Zed через настройки, с�
     "JavaScript": {
       "format_on_save": "on",
       "prettier": { "allowed": false },
-      "formatter": [{ "language_server": { "name": "oxfmt" } }],
-      "code_action": "source.fixAll.oxc"
+      "formatter": [
+        { "language_server": { "name": "oxfmt" } },
+        { "code_action": "source.fixAll.oxc" }
+      ]
+    },
+    "JSX": {
+      "format_on_save": "on",
+      "prettier": { "allowed": false },
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
     },
     "TypeScript": {
+      "format_on_save": "on",
+      "prettier": { "allowed": false },
+      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+    },
+    "TSX": {
       "format_on_save": "on",
       "prettier": { "allowed": false },
       "formatter": [{ "language_server": { "name": "oxfmt" } }]
