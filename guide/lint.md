@@ -50,3 +50,54 @@ export default defineConfig({
 Если вы переходите с ESLint и всё ещё зависите от нескольких важных ESLint-плагинов на JavaScript, Oxlint предоставляет [поддержку JS-плагинов](https://oxc.rs/docs/guide/usage/linter/js-plugins), которая поможет сохранить их работоспособность на время завершения миграции.
 
 JS-плагины также позволяют [писать собственные правила](https://oxc.rs/docs/guide/usage/linter/writing-js-plugins.html) для Oxlint.
+
+### Написание собственных правил {#writing-your-own-rules}
+
+Импортируйте API для создания плагинов из `vite-plus/lint/plugins`:
+
+```js [lint/my-plugin.js]
+import { definePlugin, defineRule } from 'vite-plus/lint/plugins';
+
+const noFoo = defineRule({
+  meta: { messages: { noFoo: 'Do not name things "foo".' } },
+  create(context) {
+    return {
+      Identifier(node) {
+        if (node.name === 'foo') {
+          context.report({ node, messageId: 'noFoo' });
+        }
+      },
+    };
+  },
+});
+
+export default definePlugin({
+  meta: { name: 'my' },
+  rules: { 'no-foo': noFoo },
+});
+```
+
+Зарегистрируйте его в `lint.jsPlugins` и включите его правила:
+
+```ts [vite.config.ts]
+import { defineConfig } from 'vite-plus';
+
+export default defineConfig({
+  lint: {
+    jsPlugins: ['./lint/my-plugin.js'],
+    rules: {
+      'my/no-foo': 'error',
+    },
+  },
+});
+```
+
+Для тестирования правил `RuleTester` доступен из `vite-plus/lint/plugins-dev`.
+
+Обе точки входа повторно экспортируют копию, поставляемую вместе с Vite+. Поэтому API всегда соответствует встроенному в Vite+ Oxlint.
+
+Используйте их вместо добавления `@oxlint/plugins` или `oxlint` в качестве прямой зависимости. Отдельно закреплённая версия может рассинхронизироваться с линтером, который загружает ваш плагин. Кроме того, она не будет разрешаться из файла плагина при строгой структуре pnpm, если каждый пакет, содержащий плагин, не объявляет её в зависимостях.
+
+`vp migrate` автоматически переписывает существующие импорты `oxlint` и `@oxlint/plugins`. См. [Импорты JS-плагинов Oxlint](/guide/migrate-rules#oxlint-js-plugin-imports).
+
+Правило `vite-plus/prefer-vite-plus-imports` сообщает о любых импортах, которые появились снова.
