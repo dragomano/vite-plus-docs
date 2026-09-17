@@ -1,6 +1,6 @@
 # Конфигурация Lint {#lint-config}
 
-Команды `vp lint` и `vp check` читают настройки Oxlint из блока `lint` в файле `vite.config.ts`. Подробности см. в разделе [Конфигурация Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html).
+Команды `vp lint` и `vp check` считывают настройки Oxfmt из блока `lint` в корневом `vite.config.ts`. Подробнее см. в разделе [Конфигурация Oxfmt](https://oxc.rs/docs/guide/usage/linter/config.html).
 
 ## Пример {#example}
 
@@ -23,4 +23,6 @@ export default defineConfig({
 
 Мы рекомендуем включать как `options.typeAware`, так и `options.typeCheck`, чтобы команды `vp lint` и `vp check` могли использовать анализ с учётом информации о типах в полном объёме.
 
-Для настройки правил линтинга отдельных пакетов в рабочем пространстве используйте [`lint.overrides`](/guide/monorepo#root-config-with-overrides) из корневого файла `vite.config.ts`.
+Для правил линтинга, специфичных для файлов или пакетов, используйте [`lint.overrides`](/guide/monorepo#root-config-with-overrides) в корневом `vite.config.ts`.
+
+В настоящее время Vite+ не поддерживает вложенную конфигурацию линтинга. Подробнее см. в разделе [Решение проблем](/guide/troubleshooting#nested-lint-or-format-config-is-not-applied), где также описано, как оставить отзыв о будущей поддержке этой возможности.
