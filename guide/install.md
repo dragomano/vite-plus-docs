@@ -139,6 +139,7 @@ Vite+ предоставляет все привычные команды упр
 - `vp add -D typescript vitest`
 - `vp add -O fsevents`
 - `vp add --save-peer react`
+- `vp add react --ignore-scripts`
 - `vp remove react`
 - `vp remove --filter web react`
 
