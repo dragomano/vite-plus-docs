@@ -69,40 +69,6 @@ vp migrate my-app
 - Выполните `vp test`
 - Выполните `vp build` (или `vp pack`, если вы собираете библиотеку)
 
-## Ручная установка и миграция {#manual-installation-migration}
-
-Если вы вручную переносите проект на Vite+, сначала установите следующие dev-зависимости:
-
-```bash
-vp install -D vite-plus
-```
-
-Необходимо добавить переопределения в настройках вашего пакетного менеджера, чтобы другие пакеты использовали версии Vite+, а именно: указать `vite` как алиас для `@voidzero-dev/vite-plus-core`, а для `vitest` зафиксировать версию, которая входит в состав Vite+ (выполните `vp --version`), чтобы весь проект использовал одну и ту же копию Vitest вместе с `vp test`. Без фиксации версии `vitest` зависимость или пакет workspace может подтянуть другую версию Vitest, из-за чего внутренние компоненты Vitest (моки, `expect`, состояние раннера) окажутся разделены:
-
-```json
-"overrides": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "4.1.11"
-}
-```
-
-Если вы используете `pnpm`, добавьте это в ваш `pnpm-workspace.yaml`:
-
-```yaml
-overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: 4.1.11
-```
-
-Или, если вы используете Yarn:
-
-```json
-"resolutions": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "4.1.11"
-}
-```
-
 ## Промпт для миграции {#migration-prompt}
 
 Если вы хотите передать эту работу агенту кодирования (или если вы сами агент кодирования!), используйте следующий промпт для миграции:

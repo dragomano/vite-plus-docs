@@ -6,46 +6,32 @@ import { defineConfig, type HeadConfig } from 'vitepress';
 import { groupIconMdPlugin, groupIconVitePlugin } from 'vitepress-plugin-group-icons';
 import { withMermaid } from 'vitepress-plugin-mermaid';
 
-const taskRunnerGuideItems = [
-  {
-    text: 'vp run',
-    link: '/guide/run',
-  },
-  {
-    text: 'Кэширование задач',
-    link: '/guide/cache',
-    items: [
-      { text: 'Автоматическое отслеживание данных', link: '/guide/automatic-data-tracking' },
-      { text: 'Кэш GitHub Actions', link: '/guide/github-actions-cache' },
-    ],
-  },
-  {
-    text: 'Запуск бинарных файлов',
-    link: '/guide/vpx',
-  },
-];
-
 const guideSidebar = [
   {
     text: 'Введение',
     items: [
       { text: 'Первые шаги', link: '/guide/' },
+      { text: 'Глобальный CLI', link: '/guide/global-cli' },
+      { text: 'Локальный CLI проекта', link: '/guide/local-cli' },
+      { text: 'Почему Vite+', link: '/guide/why' },
+    ],
+  },
+  {
+    text: 'Установка проекта',
+    items: [
       { text: 'Создание проекта', link: '/guide/create' },
       {
         text: 'Переход на Vite+',
         link: '/guide/migrate',
         items: [{ text: 'Правила миграции', link: '/guide/migrate-rules' }],
       },
-      { text: 'Установка зависимостей', link: '/guide/install' },
-      { text: 'Окружение', link: '/guide/env' },
-      { text: 'Переменные окружения установщика', link: '/guide/installer-env-vars' },
-      { text: 'Почему Vite+', link: '/guide/why' },
+      { text: 'Обновление Vite+', link: '/guide/upgrade-project' },
+      { text: 'Управление пакетами', link: '/guide/install' },
     ],
   },
   {
-    text: 'Разработка',
+    text: 'Инструментарий проекта',
     items: [
-      { text: 'vp dev', link: '/guide/dev' },
       {
         text: 'vp check',
         link: '/guide/check',
@@ -55,22 +41,33 @@ const guideSidebar = [
         ],
       },
       { text: 'vp test', link: '/guide/test' },
-    ],
-  },
-  {
-    text: 'Выполнение',
-    items: taskRunnerGuideItems,
-  },
-  {
-    text: 'Сборка',
-    items: [
+      { text: 'vp dev', link: '/guide/dev' },
       { text: 'vp build', link: '/guide/build' },
       { text: 'vp pack', link: '/guide/pack' },
+      {
+        text: 'vp run',
+        link: '/guide/run',
+      },
+      {
+        text: 'Кэширование задач',
+        link: '/guide/cache',
+        items: [
+          { text: 'Автоматическое отслеживание данных', link: '/guide/automatic-data-tracking' },
+          { text: 'Кэш GitHub Actions', link: '/guide/github-actions-cache' },
+        ],
+      },
+      {
+        text: 'Запуск бинарных файлов',
+        link: '/guide/vpx',
+      },
+      { text: 'Хуки коммитов', link: '/guide/commit-hooks' },
+      { text: 'Монорепозиторий', link: '/guide/monorepo' },
     ],
   },
   {
-    text: 'Обслуживание',
+    text: 'Глобальный CLI',
     items: [
+      { text: 'Окружение', link: '/guide/env' },
       { text: 'Обновление Vite+', link: '/guide/upgrade' },
       { text: 'Удаление Vite+', link: '/guide/implode' },
     ],
@@ -81,10 +78,11 @@ const guideSidebar = [
       { text: 'Интеграция с IDE', link: '/guide/ide-integration' },
       { text: 'Непрерывная интеграция', link: '/guide/ci' },
       { text: 'Docker', link: '/guide/docker' },
-      { text: 'Хуки коммитов', link: '/guide/commit-hooks' },
-      { text: 'Монорепозиторий', link: '/guide/monorepo' },
-      { text: 'Решение проблем', link: '/guide/troubleshooting' },
     ],
+  },
+  {
+    text: 'Справочник',
+    items: [{ text: 'Решение проблем', link: '/guide/troubleshooting' }],
   },
 ];
 

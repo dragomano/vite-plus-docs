@@ -1,14 +1,20 @@
 # Первые шаги {#getting-started}
 
-Vite+ — это унифицированный инструментарий и точка входа для веб-разработки. Он управляет вашей средой выполнения, менеджером пакетов и фронтенд-инструментарием в одном месте, объединяя [Vite](https://vite-docs.ru/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.ru/) и [Vite Task](https://github.com/voidzero-dev/vite-task).
+Vite+ — это унифицированный инструментарий и точка входа для веб-разработки.
 
-Vite+ поставляется в двух частях: `vp` — глобальный инструмент командной строки и `vite-plus` — локальный пакет, устанавливаемый в каждом проекте. Если у вас уже есть проект на Vite, используйте [`vp migrate`](/guide/migrate) для миграции его в Vite+ или вставьте наш [промпт миграции](/guide/migrate#migration-prompt) в вашего AI-агента.
+Он объединяет [Vite](https://vite.dev/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.dev/) и [Vite Task](https://github.com/voidzero-dev/vite-task) в одном пакете [`vite-plus`](/guide/local-cli), обеспечивая чрезвычайно быстрый инструментарий для фронтенд-разработки.
+
+Vite+ также поставляется с [глобальным CLI `vp`](/guide/global-cli), который управляет Node.js и менеджерами пакетов и упрощает использование Vite+ в разных проектах. Вы можете использовать любой из CLI независимо, но мы рекомендуем [использовать их вместе](/guide/global-cli#use-both-clis-together).
+
+Если у вас уже есть проект на Vite, выполните [`vp migrate`](/guide/migrate), чтобы перенести его на Vite+, или передайте своему агенту для написания кода наш [промпт для миграции](/guide/migrate#migration-prompt).
 
 Создаёте проект с помощью ИИ-ассистента? Посмотрите и скопируйте готовый промпт настройки:
 
 <CopyPrompt />
 
-## Установка `vp` {#install-vp}
+## Установка `vp` глобально {#install-vp-globally}
+
+Приведённые ниже команды устанавливают глобальный CLI `vp`, который управляет Node.js и менеджерами пакетов и делает `vp` доступным во всех проектах. Если вам нужен только фронтенд-инструментарий в одном проекте, вместо этого можно установить [локальный CLI проекта](/guide/local-cli#install).
 
 ### macOS / Linux
 
@@ -28,7 +34,9 @@ irm https://vite.plus/ps1 | iex
 `vp-setup.exe` ещё не подписан цифровой подписью. Ваш браузер может показать предупреждение при скачивании. Нажмите **«...»** → **«Сохранить»** → **«Сохранить в любом случае»**, чтобы продолжить. Если Windows Defender SmartScreen заблокирует файл при запуске, нажмите **«Дополнительные сведения»** → **«Выполнить в любом случае»**.
 :::
 
-Сценарии установки и `vp-setup.exe` читают [переменные окружения](/guide/installer-env-vars), такие как `VP_VERSION` и `VP_HOME`.
+Сценарии установки и `vp-setup.exe` читают [переменные окружения](/guide/global-cli#installation-variables), такие как `VP_VERSION` и `VP_HOME`.
+
+Если вы используете Nushell с пользовательскими каталогами XDG, перед установкой ознакомьтесь с [требованиями Nushell при запуске](/guide/global-cli#nushell-and-xdg-directories).
 
 После установки откройте новый терминал и выполните:
 
@@ -71,7 +79,7 @@ apk add libstdc++
 
 ## Быстрый старт {#quick-start}
 
-Создайте проект, установите зависимости и используйте команды по умолчанию:
+После установки глобального CLI создайте проект, установите зависимости и используйте команды по умолчанию:
 
 ```bash
 vp create # Создать новый проект
@@ -82,54 +90,49 @@ vp test # Запустить JavaScript-тесты
 vp build # Собрать для продакшена
 ```
 
-Вы также можете просто запустить `vp` самостоятельно и использовать интерактивную командную строку.
+Также можно запустить `vp` без аргументов, чтобы открыть интерактивную командную строку. В конфигурации, использующей только локальный CLI, запускайте те же команды через менеджер пакетов, например `pnpm exec vp check`.
 
 ## Основные команды {#core-commands}
 
-Vite+ может полностью управлять циклом локальной фронтенд-разработки: от создания проекта, разработки, проверки и тестирования до сборки для продакшена.
+Vite+ охватывает полный цикл фронтенд-разработки — от создания проекта до разработки, проверок, тестирования и сборки для продакшена. Большинство команд доступны в обоих вариантах; команды для управления окружением на уровне машины и самостоятельного управления требуют глобального CLI.
 
-### Создание {#start}
+### Установка проекта {#set-up-a-project}
 
 - [`vp create`](/guide/create) создаёт новые приложения, пакеты и монорепозитории.
 - [`vp migrate`](/guide/migrate) переносит существующие проекты на Vite+.
-- [`vp config`](/guide/commit-hooks) устанавливает диспетчер Git-хуков и настраивает интеграцию с ИИ-агентами.
-- [`vp hooks`](/guide/commit-hooks) управляет диспетчером Git-хуков (`enable`, `disable`, `status`).
-- [`vp staged`](/guide/commit-hooks) запускает проверки для staged-файлов.
 - [`vp install`](/guide/install) устанавливает зависимости с помощью подходящего менеджера пакетов.
-- [`vp env`](/guide/env) управляет средами Node.js и менеджеров пакетов.
+- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp list`](/guide/install), [`vp why`](/guide/install) и [`vp info`](/guide/install) охватывают остальные операции рабочего процесса управления пакетами.
+- [`vp link`](/guide/install), [`vp unlink`](/guide/install), [`vp rebuild`](/guide/install) и [`vp pm <command>`](/guide/install) предоставляют низкоуровневые операции менеджера пакетов.
 
-### Разработка {#develop}
+### Инструментарий проекта {#project-toolchain}
 
-- [`vp dev`](/guide/dev) запускает dev-сервер на базе Vite.
 - [`vp check`](/guide/check) запускает форматирование, линтинг и проверку типов вместе.
-- [`vp lint`](/guide/lint), [`vp fmt`](/guide/fmt) и [`vp test`](/guide/test) позволяют запускать эти инструменты напрямую.
-
-### Выполнение {#execute}
-
-- [`vp run`](/guide/run) запускает задачи по рабочим пространствам с кэшированием.
-- [`vp exec`](/guide/vpx) запускает бинарные файлы из локального проекта.
-- [`vp node`](/guide/env) запускает Node.js-сценарии в текущем разрешённом окружении Vite+.
-- [`vp dlx`](/guide/vpx) загружает и запускает бинарные файлы пакетов без добавления их в зависимости.
-- [`vp cache clean`](/guide/cache) очищает записи кэша задач.
-- [`vpx`](/guide/vpx) загружает и запускает бинарные файлы глобально.
-
-### Сборка {#build}
-
-- [`vp build`](/guide/build) собирает приложения.
+- [`vp lint`](/guide/lint) и [`vp fmt`](/guide/fmt) напрямую запускают соответствующие проверки.
+- [`vp test`](/guide/test) запускает тесты с помощью Vitest.
+- [`vp dev`](/guide/dev) запускает сервер разработки на базе Vite.
+- [`vp build`](/guide/build) собирает приложения, а [`vp preview`](/guide/build) позволяет локально просмотреть production-сборку.
 - [`vp pack`](/guide/pack) собирает библиотеки или автономные артефакты.
-- [`vp preview`](/guide/build) локально просматривает продакшен-сборку.
+- [`vp toolchain`](/guide/upgrade#show-the-toolchain) показывает активный инструментарий проекта; используйте `--global`, чтобы вместо этого проверить глобальную установку.
+- [`vp run`](/guide/run) запускает задачи по рабочим пространствам с кэшированием.
+- [`vp cache clean`](/guide/cache) очищает записи кэша задач.
+- [`vp exec`](/guide/vpx) запускает локальные бинарные файлы проекта, а [`vp dlx`](/guide/vpx) и [`vpx`](/guide/vpx) скачивают и запускают бинарные файлы пакетов.
+- [`vp config`](/guide/commit-hooks) устанавливает диспетчер Git-хуков и настраивает интеграцию с агентами.
+- [`vp hooks`](/guide/commit-hooks) управляет диспетчером Git-хуков, а [`vp staged`](/guide/commit-hooks) запускает проверки для проиндексированных файлов.
+- [Руководство по монорепозиториям](/guide/monorepo) посвящено структуре многопакетных проектов и соответствующим командам.
 
-### Управление зависимостями {#manage-dependencies}
+### Глобальный CLI {#global-cli}
 
-- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp list`](/guide/install), [`vp why`](/guide/install) и [`vp info`](/guide/install) предоставляют обёртки над типовыми сценариями работы менеджеров пакетов.
-- [`vp link`](/guide/install), [`vp unlink`](/guide/install) и [`vp rebuild`](/guide/install) работают с локальными ссылками на пакеты. Они также выполняют пересборку нативных модулей.
-- [`vp pm <command>`](/guide/install) напрямую вызывает команды другого менеджера пакетов.
+- [`vp env`](/guide/env) управляет окружением Node.js и менеджеров пакетов, а [`vp node`](/guide/env) запускает скрипты в определённом окружении.
+- [`vp upgrade`](/guide/upgrade) обновляет саму глобальную установку `vp`.
+- [`vp implode`](/guide/implode) удаляет глобальную установку `vp` и связанные с Vite+ данные с вашего компьютера.
 
-### Обслуживание {#maintain}
+### Рабочий процесс {#workflow}
 
-- [`vp toolchain`](/guide/upgrade#show-the-toolchain) отображает версии инструментов Vite+ и связи между ними
-- [`vp upgrade`](/guide/upgrade) обновляет саму установку `vp`.
-- [`vp implode`](/guide/implode) удаляет `vp` и связанные данные Vite+ с вашего компьютера.
+- [Интеграция с IDE](/guide/ide-integration), [CI](/guide/ci) и [Docker](/guide/docker) охватывают распространённые среды разработки и развёртывания.
+
+### Справочник {#reference}
+
+- [Решение проблем](/guide/troubleshooting) посвящен распространённым проблемам с командами, конфигурацией и интеграцией.
 
 ::: info
 Vite+ поставляется с множеством предопределённых команд, таких как `vp build`, `vp test` и `vp dev`. Эти команды встроенные и не могут быть изменены. Если вы хотите запустить команду из сценариев `package.json`, используйте `vp run <command>` или `vpr <command>`.
