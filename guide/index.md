@@ -2,13 +2,13 @@
 
 Vite+ — это унифицированный инструментарий и точка входа для веб-разработки.
 
-Он объединяет [Vite](https://vite.dev/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.dev/) и [Vite Task](https://github.com/voidzero-dev/vite-task) в одном пакете [`vite-plus`](/guide/local-cli), обеспечивая чрезвычайно быстрый инструментарий для фронтенд-разработки.
+Он объединяет [Vite](https://vite.dev/), [Vitest](https://vitest.dev/), [Oxlint](https://oxc.rs/docs/guide/usage/linter.html), [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), [Rolldown](https://rolldown.rs/), [tsdown](https://tsdown.ru/) и [Vite Task](https://github.com/voidzero-dev/vite-task) в одном пакете [`vite-plus`](/guide/local-cli), обеспечивая чрезвычайно быстрый инструментарий для фронтенд-разработки.
 
 Vite+ также поставляется с [глобальным CLI `vp`](/guide/global-cli), который управляет Node.js и менеджерами пакетов и упрощает использование Vite+ в разных проектах. Вы можете использовать любой из CLI независимо, но мы рекомендуем [использовать их вместе](/guide/global-cli#use-both-clis-together).
 
 Если у вас уже есть проект на Vite, выполните [`vp migrate`](/guide/migrate), чтобы перенести его на Vite+, или передайте своему агенту для написания кода наш [промпт для миграции](/guide/migrate#migration-prompt).
 
-Создаёте проект с помощью ИИ-ассистента? Посмотрите и скопируйте готовый промпт настройки:
+Разрабатываете с помощью ИИ-ассистента? Просмотрите и скопируйте промпт для создания нового проекта, миграции существующего проекта или обновления Vite+:
 
 <CopyPrompt />
 
