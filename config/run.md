@@ -27,7 +27,7 @@ export default defineConfig({
 ```ts [vite.config.ts]
 export default defineConfig({
   run: {
-    enablePrePostScripts: false, // Отключить хуки pre/post жизненного цикла
+    enablePrePostScripts: false, // Отключить pre/post хуки жизненного цикла
   },
 });
 ```
@@ -219,7 +219,7 @@ Vite Task передаёт набор общих переменных окруж
 
 - **Системные:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
 - **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
-- **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`
+- **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
 - **Терминал:** переменные, связанные с цветами (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`), не передаются задачам автоматически, если только вы не укажете их в `env` (значение включается в отпечаток кэша, поэтому его изменение приводит к инвалидизации кэша) или в `untrackedEnv` (передаётся без включения в отпечаток кэша). Если `FORCE_COLOR` отсутствует в обоих списках, дочерний процесс получает `FORCE_COLOR=1`, чтобы кэшированные логи сохраняли цветовое оформление. При отображении цвета автоматически удаляются, если терминал не поддерживает их вывод.
 
 ### `input`
