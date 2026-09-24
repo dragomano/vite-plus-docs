@@ -23,7 +23,10 @@ const guideSidebar = [
       {
         text: 'Переход на Vite+',
         link: '/guide/migrate',
-        items: [{ text: 'Правила миграции', link: '/guide/migrate-rules' }],
+        items: [
+          { text: 'Правила миграции', link: '/guide/migrate-rules' },
+          { text: 'Обновление до Vitest 5', link: '/guide/vitest-v5' },
+        ],
       },
       { text: 'Обновление Vite+', link: '/guide/upgrade-project' },
       { text: 'Управление пакетами', link: '/guide/install' },
