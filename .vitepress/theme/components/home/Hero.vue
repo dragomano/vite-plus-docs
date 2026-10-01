@@ -3,6 +3,7 @@
     <div class="w-full sm:w-2xl flex flex-col justify-start items-center gap-10 px-5 sm:px-0">
       <div class="flex flex-col justify-start items-center gap-4">
         <img src="/icon.svg" alt="Логотип Vite+" class="w-9" />
+        <p class="text-sm font-mono text-[var(--color-brand)]">Vite+ 1.0 уже доступен</p>
         <h1 class="text-center text-primary text-balance shine-text">
           <span class="inline-block">Единый набор</span>
           <span class="inline-block">инструментов для веба</span>
@@ -15,12 +16,12 @@
       <div class="flex flex-wrap items-center justify-center gap-5">
         <a href="/guide" target="_self" class="button button--primary"> Начать </a>
         <a
-          href="https://voidzero.dev/posts/announcing-vite-plus-beta"
+          href="https://voidzero.dev/posts/announcing-vite-plus-1-0"
           target="_blank"
           rel="noopener noreferrer"
           class="button"
         >
-          Прочитать анонс бета-версии
+          Прочитать объявление о выпуске версии 1.0
         </a>
         <CopyPrompt />
       </div>

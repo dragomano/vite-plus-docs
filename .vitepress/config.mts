@@ -178,8 +178,8 @@ export default extendConfig(
               { text: 'GitHub', link: 'https://github.com/voidzero-dev/vite-plus' },
               { text: 'Релизы', link: 'https://github.com/voidzero-dev/vite-plus/releases' },
               {
-                text: 'Объявления',
-                link: 'https://voidzero.dev/posts/announcing-vite-plus-beta',
+                text: 'Анонс версии 1.0',
+                link: 'https://voidzero.dev/posts/announcing-vite-plus-1-0',
               },
               {
                 text: 'Участие в разработке',
