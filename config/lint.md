@@ -1,6 +1,8 @@
 # Конфигурация Lint {#lint-config}
 
-`vp lint` и `vp check` используют блок `lint` из корневой конфигурации workspace, в том числе при запуске из каталога пакета. Конфигурации пакетов не заменяют эти настройки `lint`. Используйте `vp lint -c <path>` или `vp lint --config <path>`, чтобы выбрать другую конфигурацию. Если в корневой конфигурации нет блока `lint`, Oxlint использует [встроенный механизм поиска конфигурации](/guide/lint#configuration). Подробнее см. [конфигурацию Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html).
+`vp lint` использует [встроенный механизм поиска конфигурации](/guide/lint#configuration) Oxlint, начиная с рабочего каталога. Используйте `vp lint -c <path>` или `vp lint --config <path>`, чтобы выбрать другую конфигурацию. Подробнее см. [конфигурацию Oxlint](https://oxc.rs/docs/guide/usage/linter/config.html).
+
+`vp check` использует блок `lint` из корневой конфигурации workspace, если он существует, в том числе при запуске из каталога пакета. Конфигурации пакетов не заменяют эти настройки `lint` в `vp check`.
 
 ## Пример {#example}
 
