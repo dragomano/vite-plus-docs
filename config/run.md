@@ -80,7 +80,7 @@ tasks: {
 }
 ```
 
-Используйте объектную форму, если задаче требуются дополнительные поля, такие как `cache`, `dependsOn`, `env` или `input`.
+Используйте объектную форму, если задаче требуются дополнительные поля, такие как `cache`, `dependsOn` или `cwd`.
 
 ### `command`
 
@@ -156,10 +156,26 @@ tasks: {
 
 ### `cache`
 
-- **Тип:** `boolean`
+- **Тип:** `boolean | { env?: string[], untrackedEnv?: string[], input?: Array<...>, output?: Array<...> }`
 - **По умолчанию:** `true`
 
-Определяет, следует ли кэшировать результаты этой задачи. Установите значение `false` для задач, которые никогда не должны кэшироваться, например для серверов разработки:
+Определяет, следует ли кэшировать задачу и как именно это делать. Кэширование выполняется с настройками по умолчанию, если `cache` опущен, равен `true` или является пустым объектом `{}`.
+
+Используйте объектную форму, чтобы настроить кэширование задачи с помощью [`cache.env`](#cache-env), [`cache.untrackedEnv`](#cache-untrackedenv), [`cache.input`](#cache-input) и [`cache.output`](#cache-output):
+
+```ts [vite.config.ts]
+tasks: {
+  build: {
+    command: 'node build.mjs',
+    cache: {
+      env: ['NODE_ENV'],
+      input: [{ auto: true }, '!dist/**'],
+    },
+  },
+}
+```
+
+Установите для `cache` значение `false` для задач, которые никогда не должны кэшироваться, например для серверов разработки:
 
 ```ts [vite.config.ts]
 tasks: {
@@ -170,7 +186,7 @@ tasks: {
 }
 ```
 
-### `env`
+### `cache.env`
 
 - **Тип:** `string[]`
 - **По умолчанию:** `[]`
@@ -181,7 +197,9 @@ tasks: {
 tasks: {
   build: {
     command: 'node build.mjs',
-    env: ['NODE_ENV'],
+    cache: {
+      env: ['NODE_ENV'],
+    },
   },
 }
 ```
@@ -195,7 +213,7 @@ $ NODE_ENV=development vp run build    # первый запуск
 $ NODE_ENV=production vp run build     # промах кэша: значение env 'NODE_ENV' изменилось
 ```
 
-### `untrackedEnv`
+### `cache.untrackedEnv`
 
 - **Тип:** `string[]`
 - **По умолчанию:** см. ниже
@@ -206,12 +224,14 @@ $ NODE_ENV=production vp run build     # промах кэша: значение
 tasks: {
   build: {
     command: 'node build.mjs',
-    untrackedEnv: ['CI', 'GITHUB_ACTIONS'],
+    cache: {
+      untrackedEnv: ['CI', 'GITHUB_ACTIONS'],
+    },
   },
 }
 ```
 
-`untrackedEnv` принимает те же шаблоны с подстановочными знаками и шаблоны-исключения с `!`, что и [`env`](#env).
+`untrackedEnv` принимает те же шаблоны с подстановочными знаками и шаблоны-исключения с `!`, что и [`cache.env`](#cache-env).
 
 Не добавляйте переменную в `untrackedEnv`, если её значение влияет на результат выполнения задачи. Если инструмент отчётности о кэше отслеживает переменную через [автоматическое отслеживание](/guide/automatic-data-tracking#cooperative-tracking), не добавляйте её ни в `env`, ни в `untrackedEnv`.
 
@@ -222,7 +242,7 @@ Vite Task передаёт набор общих переменных окруж
 - **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
 - **Терминал:** переменные, связанные с цветами (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`), не передаются задачам автоматически, если только вы не укажете их в `env` (значение включается в отпечаток кэша, поэтому его изменение приводит к инвалидизации кэша) или в `untrackedEnv` (передаётся без включения в отпечаток кэша). Если `FORCE_COLOR` отсутствует в обоих списках, дочерний процесс получает `FORCE_COLOR=1`, чтобы кэшированные логи сохраняли цветовое оформление. При отображении цвета автоматически удаляются, если терминал не поддерживает их вывод.
 
-### `input`
+### `cache.input`
 
 - **Тип:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **По умолчанию:** `[{ auto: true }]` (определяется автоматически)
@@ -235,8 +255,10 @@ Vite Task автоматически определяет, какие файлы
 tasks: {
   build: {
     command: 'vp build',
-    // Используйте `{ auto: true }` для автоматического формирования отпечатка (по умолчанию).
-    input: [{ auto: true }, '!**/*.tsbuildinfo', '!dist/**'],
+    cache: {
+      // Используйте `{ auto: true }` для автоматического формирования отпечатка (по умолчанию).
+      input: [{ auto: true }, '!**/*.tsbuildinfo', '!dist/**'],
+    },
   },
 }
 ```
@@ -247,7 +269,9 @@ tasks: {
 tasks: {
   build: {
     command: 'vp build',
-    input: ['src/**/*.ts', 'vite.config.ts'],
+    cache: {
+      input: ['src/**/*.ts', 'vite.config.ts'],
+    },
   },
 }
 ```
@@ -258,10 +282,12 @@ tasks: {
 tasks: {
   build: {
     command: 'vp build',
-    input: [
-      { auto: true },
-      { pattern: 'shared-config/**', base: 'workspace' },
-    ],
+    cache: {
+      input: [
+        { auto: true },
+        { pattern: 'shared-config/**', base: 'workspace' },
+      ],
+    },
   },
 }
 ```
@@ -277,7 +303,9 @@ tasks: {
 tasks: {
   greet: {
     command: 'node greet.mjs',
-    input: [],
+    cache: {
+      input: [],
+    },
   },
 }
 ```
@@ -286,7 +314,7 @@ tasks: {
 Строковые глоб-шаблоны по умолчанию разрешаются относительно каталога пакета. Используйте объектную форму с `base: "workspace"`, чтобы разрешать их относительно корня рабочего пространства.
 :::
 
-### `output`
+### `cache.output`
 
 - **Тип:** `Array<string | { auto: boolean } | { pattern: string, base: "workspace" | "package" }>`
 - **По умолчанию:** автоматическое отслеживание записи
@@ -299,7 +327,9 @@ Vite Task автоматически архивирует файлы, созда
 tasks: {
   build: {
     command: 'node build.mjs',
-    output: ['dist/**', '!dist/cache/**'],
+    cache: {
+      output: ['dist/**', '!dist/cache/**'],
+    },
   },
 }
 ```
@@ -312,7 +342,9 @@ tasks: {
 tasks: {
   typecheck: {
     command: 'tsc --build',
-    output: [{ auto: true }, '!*.tsbuildinfo'],
+    cache: {
+      output: [{ auto: true }, '!*.tsbuildinfo'],
+    },
   },
 }
 ```
@@ -323,10 +355,12 @@ tasks: {
 tasks: {
   build: {
     command: 'node build.mjs',
-    output: [
-      'dist/**',
-      { pattern: 'shared-artifacts/**', base: 'workspace' },
-    ],
+    cache: {
+      output: [
+        'dist/**',
+        { pattern: 'shared-artifacts/**', base: 'workspace' },
+      ],
+    },
   },
 }
 ```
@@ -337,7 +371,9 @@ tasks: {
 tasks: {
   report: {
     command: 'node scripts/report.mjs',
-    output: [],
+    cache: {
+      output: [],
+    },
   },
 }
 ```
