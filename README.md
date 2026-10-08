@@ -1,9 +1,9 @@
 <p align="center">
   <a href="https://plus.vite-docs.ru" target="_blank" rel="noopener noreferrer">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/voidzero-dev/vite-plus/refs/heads/main/logo-dark.svg">
-      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/voidzero-dev/vite-plus/refs/heads/main/logo.svg">
-      <img alt="Vite+" src="https://raw.githubusercontent.com/voidzero-dev/vite-plus/refs/heads/main/logo.svg" height="60">
+      <source media="(prefers-color-scheme: dark)" srcset="./public/logo-dark.svg">
+      <source media="(prefers-color-scheme: light)" srcset="./public/logo.svg">
+      <img alt="Vite+" src="./public/logo.svg" height="60">
     </picture>
   </a>
 </p>
@@ -198,12 +198,12 @@ vp migrate
 vp install -D vite-plus
 ```
 
-Добавьте переопределения в пакетном менеджере, чтобы другие пакеты использовали версии Vite+. Укажите `vite` как алиас для `@voidzero-dev/vite-plus-core`. Зафиксируйте `vitest` на версии из `vp toolchain vitest`. Тогда проект и `vp test` будут использовать одну и ту же копию Vitest. Без этой фиксации зависимость или пакет workspace может установить другую версию Vitest. Эти две версии могут использовать разные моки, функции `expect` и состояния раннера:
+Добавьте переопределения в пакетном менеджере, чтобы другие пакеты использовали версии Vite+. Укажите `vite` как алиас для `@voidzero-dev/vite-plus-core`, подставив `<vite-plus-version>` — установленную версию `vite-plus`. Зафиксируйте `vitest` на `<vitest-version>`, взяв версию из состава пакета, которую показывает `vp toolchain vitest`. Тогда проект и `vp test` будут использовать одну и ту же копию Vitest. Без этой фиксации зависимость или пакет workspace может установить другую версию Vitest. Эти две версии могут использовать разные моки, функции `expect` и состояния раннера:
 
 ```json
 "overrides": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "4.1.10"
+  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vitest": "<vitest-version>"
 }
 ```
 
@@ -211,15 +211,15 @@ vp install -D vite-plus
 
 ```yaml
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: 4.1.10
+  vite@*: npm:@voidzero-dev/vite-plus-core@<vite-plus-version> # Укажите установленную версию vite-plus
+  vitest@*: <vitest-version> # Возьмите версию из vp toolchain vitest
 ```
 
 Или, если вы используете Yarn:
 
 ```json
 "resolutions": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "4.1.10"
+  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vitest": "<vitest-version>"
 }
 ```

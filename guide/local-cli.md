@@ -45,27 +45,27 @@ bunx --package vite-plus vp create
 vp install -D vite-plus
 ```
 
-Необходимо добавить переопределения в настройках вашего пакетного менеджера, чтобы другие пакеты использовали версии Vite+, а именно: указать `vite` как алиас для `@voidzero-dev/vite-plus-core`, а для `vitest` зафиксировать версию, которая входит в состав Vite+ (выполните `vp --version`), чтобы весь проект использовал одну и ту же копию Vitest вместе с `vp test`. Без фиксации версии `vitest` зависимость или пакет workspace может подтянуть другую версию Vitest, из-за чего внутренние компоненты Vitest (моки, `expect`, состояние раннера) окажутся разделены:
+Необходимо добавить переопределения в настройки вашего пакетного менеджера, чтобы другие пакеты использовали версии Vite+, а именно: указать `vite` как алиас для `@voidzero-dev/vite-plus-core`, подставив `<vite-plus-version>` — установленную версию `vite-plus`, а для `vitest` зафиксировать `<vitest-version>` — версию из состава Vite+, которую показывает `vp toolchain vitest`, чтобы весь проект использовал одну и ту же копию Vitest вместе с `vp test`. Без фиксации версии `vitest` зависимость или пакет workspace может подтянуть другую версию Vitest, отличную от раннера из состава Vite+, из-за чего внутренние компоненты Vitest (моки, `expect`, состояние раннера) окажутся разделены:
 
 ::: code-group
 
 ```yaml [pnpm-workspace.yaml]
 overrides:
-  vite: npm:@voidzero-dev/vite-plus-core@latest
-  vitest: 5.0.3
+  vite@*: npm:@voidzero-dev/vite-plus-core@<vite-plus-version> # Укажите установленную версию vite-plus
+  vitest@*: <vitest-version> # Возьмите версию из vp toolchain vitest
 ```
 
 ```json [npm / Bun package.json]
 "overrides": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "5.0.3"
+  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vitest": "<vitest-version>"
 }
 ```
 
 ```json [Yarn package.json]
 "resolutions": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-  "vitest": "5.0.3"
+  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vitest": "<vitest-version>"
 }
 ```
 
