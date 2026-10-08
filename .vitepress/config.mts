@@ -29,7 +29,7 @@ const guideSidebar = [
         ],
       },
       { text: 'Обновление Vite+', link: '/guide/upgrade-project' },
-      { text: 'Управление пакетами', link: '/guide/install' },
+      { text: 'Управление пакетами', link: '/guide/package-management' },
     ],
   },
   {

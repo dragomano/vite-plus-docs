@@ -100,9 +100,9 @@ Vite+ охватывает полный цикл фронтенд-разрабо
 
 - [`vp create`](/guide/create) создаёт новые приложения, пакеты и монорепозитории.
 - [`vp migrate`](/guide/migrate) переносит существующие проекты на Vite+.
-- [`vp install`](/guide/install) устанавливает зависимости с помощью подходящего менеджера пакетов.
-- [`vp add`](/guide/install), [`vp remove`](/guide/install), [`vp update`](/guide/install), [`vp dedupe`](/guide/install), [`vp outdated`](/guide/install), [`vp list`](/guide/install), [`vp why`](/guide/install) и [`vp info`](/guide/install) охватывают остальные операции рабочего процесса управления пакетами.
-- [`vp link`](/guide/install), [`vp unlink`](/guide/install), [`vp rebuild`](/guide/install) и [`vp pm <command>`](/guide/install) предоставляют низкоуровневые операции менеджера пакетов.
+- [`vp install`](/guide/package-management) устанавливает зависимости с помощью подходящего менеджера пакетов.
+- [`vp add`](/guide/package-management), [`vp remove`](/guide/package-management), [`vp update`](/guide/package-management), [`vp dedupe`](/guide/package-management), [`vp outdated`](/guide/package-management), [`vp list`](/guide/package-management), [`vp why`](/guide/package-management) и [`vp info`](/guide/package-management) охватывают остальные операции рабочего процесса управления пакетами.
+- [`vp link`](/guide/package-management), [`vp unlink`](/guide/package-management), [`vp rebuild`](/guide/package-management) и [`vp pm <command>`](/guide/package-management) предоставляют низкоуровневые операции менеджера пакетов.
 
 ### Инструментарий проекта {#project-toolchain}
 
