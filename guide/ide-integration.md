@@ -146,13 +146,15 @@ Vite+ поддерживает VS Code и Zed через настройки, с�
         "javascript.nodejs.core.library.configured.version": "24.18.0", // Замените на выбранную вами версию Node.js
         "javascript.nodejs.core.library.typings.version": "24.13.3", // Замените на версию @types/node, соответствующую вашей версии Node.js (или удалите, если не хотите её указывать)
         "javascript.preferred.runtime.type.id": "node",
-        "nodejs_interpreter_path": "$USER_HOME$/.vite-plus/bin/node",
+        "nodejs_interpreter_path": "$USER_HOME$/.local/share/vite-plus/bin/node",
         "nodejs_package_manager_path": "pnpm" // Замените на выбранный вами пакетный менеджер
       }
     }]]>
   </component>
 </project>
 ```
+
+Этот путь предполагает новую установку в Unix с каталогами XDG по умолчанию. В Windows используйте `%LOCALAPPDATA%\vite-plus\bin\node.exe`. Выполните `vp env current node`, чтобы проверить выбранную версию Node.js и путь к бинарному файлу. Если вы используете собственный `VP_HOME` или каталоги XDG либо более старую установку Vite+, укажите в `nodejs_interpreter_path` путь к своей shim-команде Node.js.
 
 ```xml [.idea/OxfmtSettings.xml]
 <?xml version="1.0" encoding="UTF-8"?>
