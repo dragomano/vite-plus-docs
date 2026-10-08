@@ -61,7 +61,7 @@ vp run lint # должно вывести "cache hit"
 
 ## 2. Восстановите кэш после установки зависимостей {#_2-restore-the-cache-after-install}
 
-Восстанавливайте `node_modules/.vite/task-cache` после выполнения `vp install`, поскольку установка пакетов может создавать или изменять содержимое `node_modules`.
+Восстанавливайте `node_modules/.vite/task-cache` после выполнения шага `setup-vp`, поскольку установка пакетов может создавать или изменять содержимое `node_modules`.
 
 Укажите ниже в `<setup-vp-version>` точную версию со [страницы релизов `setup-vp`](https://github.com/voidzero-dev/setup-vp/releases). Вместо неё можно указать SHA коммита.
 
@@ -88,8 +88,6 @@ jobs:
         with:
           node-version: '24'
           cache: true
-
-      - run: vp install
 
       - name: Restore Vite Task cache
         id: vite-task-cache

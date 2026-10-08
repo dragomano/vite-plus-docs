@@ -14,7 +14,7 @@
 
 ## GitHub Actions {#github-actions}
 
-GitHub Action автоматически устанавливает Vite+, необходимую версию Node.js и пакетный менеджер. Благодаря этому в большинстве случаев вам не понадобятся отдельные шаги `setup-node`, настройка пакетного менеджера или ручное кэширование зависимостей в рабочем процессе.
+GitHub Action автоматически устанавливает Vite+, необходимую версию Node.js и пакетный менеджер. Благодаря этому в большинстве случаев вам не понадобятся отдельные шаги `setup-node`, настройка пакетного менеджера, установка зависимостей или ручное кэширование зависимостей в рабочем процессе.
 
 ```yaml [.github/workflows/ci.yml]
 - uses: voidzero-dev/setup-vp@<setup-vp-version>
@@ -27,7 +27,7 @@ GitHub Action автоматически устанавливает Vite+, не�
 - run: vp build
 ```
 
-При использовании `cache: true` зависимостями автоматически управляет `setup-vp`, включая их кэширование.
+По умолчанию `setup-vp` выполняет `vp install`. Если вы задали `run-install: false`, обязательно добавьте шаг `vp install` перед запуском других команд. При `cache: true` `setup-vp` автоматически берёт кэширование зависимостей на себя.
 
 ## GitLab CI/CD {#gitlab-ci-cd}
 
@@ -151,7 +151,7 @@ Dependabot проверяет записи `uses:` в `.github/workflows` каж
     node-version: '24'
     cache: true
 
-- run: vp install && vp run dev:setup
+- run: vp run dev:setup
 - run: vp check
 - run: vp test
 ```
