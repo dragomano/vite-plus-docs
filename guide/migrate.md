@@ -151,7 +151,7 @@ npm exec -- vp build
 
 ### Vitest
 
-Vitest автоматически мигрируется через `vp migrate`. `vite-plus` повторно экспортирует upstream `vitest@5.0.1` через `vite-plus/test*`, поэтому для тестов в Node.js достаточно одной установки `vite-plus` — теперь больше не нужно устанавливать `vitest` напрямую.
+Vitest автоматически мигрируется через `vp migrate`. `vite-plus` повторно экспортирует upstream `vitest@5.0.3` через `vite-plus/test*`, поэтому для тестов в Node.js достаточно одной установки `vite-plus` — теперь больше не нужно устанавливать `vitest` напрямую.
 
 Для режима браузера можно использовать базовую среду выполнения браузера (`@vitest/browser`) и провайдер Preview (`@vitest/browser-preview`), входящие в `vite-plus`. Для использования Playwright или WebDriverIO также потребуется соответствующий подключаемый провайдер (`@vitest/browser-playwright` или `@vitest/browser-webdriverio`) и его peer-зависимость фреймворка (`playwright` или `webdriverio`).
 
@@ -163,8 +163,8 @@ Vitest автоматически мигрируется через `vp migrate`
 
 ```ts
 // до
-import { defineConfig } from 'vitest/config';
 import { describe, expect, it, vi } from 'vitest';
+import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 
 const { page } = await import('@vitest/browser/context');

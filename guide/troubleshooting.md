@@ -95,8 +95,8 @@ export default defineConfig({
 Используйте `lazyPlugins`, чтобы пропускать создание экземпляров плагинов, когда vite-plus загружает вашу конфигурацию только для чтения блока метаданных (`lint`, `fmt`, `check`, `staged`, `pack`, `create`, поиск задач `run`/`cache` и инструменты редактора). При этом плагины по-прежнему будут загружаться во всех случаях, когда Vite действительно запускается: `dev`, `build`, `test`, `preview`, а также при любых сборках, запускаемых вашими собственными сценариями (например, задачей `vp run` или командой `vp exec`).
 
 ```ts [vite.config.ts]
-import { defineConfig, lazyPlugins } from 'vite-plus';
 import myPlugin from 'vite-plugin-foo';
+import { defineConfig, lazyPlugins } from 'vite-plus';
 
 export default defineConfig({
   plugins: lazyPlugins(() => [myPlugin()]),
