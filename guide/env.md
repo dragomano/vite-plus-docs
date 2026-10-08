@@ -174,6 +174,7 @@ vp-use --unset
 ### Управление {#manage}
 
 - `vp env default` показывает глобальную версию Node.js по умолчанию и версию каждого настроенного менеджера пакетов. Версии без указания компонента задают версию Node.js; спецификации с указанием менеджера, такие как `pnpm@10.18.0`, задают версию по умолчанию для shim-команды этого менеджера, не изменяя версии по умолчанию для Bun, Yarn или npm. `--unset` удаляет все значения по умолчанию, если не указан селектор.
+- Спецификации `vp env default <lts|latest>` и `<package-manager>@latest` заново разрешаются при каждом использовании, поэтому версия по умолчанию следует за новыми выпусками, включая новые мажорные версии. Остальные версии и диапазоны, например `24` или `pnpm@10`, при установке разрешаются в конкретную версию.
 - `vp env pin` показывает или записывает закреплённые версии проекта. Существующие файлы `.node-version` и поля `packageManager` верхнего уровня продолжают обновляться для обеспечения совместимости. Существующий `.nvmrc` обновляется, если он является фактическим источником версии Node в текущем каталоге; его комментарии и другое содержимое, не относящееся к версии, сохраняются. В противном случае Vite+ записывает соответствующую запись `devEngines`. Используйте `--target node-version`, `--target nvmrc`, `--target dev-engines` или `--target package-manager`, чтобы явно выбрать целевой источник. Закрепление версии во вложенном каталоге не изменяет унаследованный `.nvmrc`.
 - `vp env unpin` по умолчанию удаляет обе действующие фиксации; добавьте селектор, чтобы удалить только одну из них. Объявления с более низким приоритетом не удаляются.
 - `vp env use` активирует всю среду проекта. Явно указанные спецификации переопределяют выбранные компоненты; `--unset` удаляет настройки обоих компонентов, если не указан селектор.
@@ -208,13 +209,17 @@ vp env off pnpm               # Использовать только систе
 vp env print                  # Вывести настройки PATH для обоих компонентов
 
 # Управление
+vp env pin lts                # Закрепить только Node.js на конкретную версию
 vp env pin lts pnpm@10        # Зафиксировать точные версии обоих компонентов проекта
 vp env install                # Установить всю определённую среду
-vp env default node@24        # Задать глобальную версию Node.js по умолчанию
-vp env default pnpm@10        # Задать глобальную версию pnpm по умолчанию
 vp env use 20 pnpm@10         # Переопределить оба компонента для текущей оболочки
 vp env use --unset pnpm       # Удалить только сессионную версию pnpm
 vp env use --unset pm         # Удалить все сессионные версии менеджеров пакетов
+
+# Управление (глобальное)
+vp env default lts            # Всегда использовать последний LTS, включая новые мажорные версии
+vp env default node@24        # Закрепить версию Node.js по умолчанию
+vp env default pnpm@10        # Закрепить версию pnpm по умолчанию
 vp env clean                  # Удалить неиспользуемые управляемые версии Node.js и менеджеров пакетов
 
 # Проверка
@@ -244,7 +249,7 @@ vp node -e "console.log(1+1)" # Сокращение: передать любо�
     "source": "devEngines.runtime",
     "source_path": "/project/package.json",
     "project_root": "/project",
-    "bin_path": "/home/.vite-plus/js_runtime/node/22.0.0/bin/node",
+    "bin_path": "/home/.local/share/vite-plus/js_runtime/node/22.0.0/bin/node",
     "installed": true,
     "mode": "managed"
   },
@@ -255,8 +260,8 @@ vp node -e "console.log(1+1)" # Сокращение: передать любо�
     "source_path": "/project/package.json",
     "project_root": "/project",
     "bin_paths": {
-      "pnpm": "/home/.vite-plus/package_manager/pnpm/10.18.0/pnpm/bin/pnpm",
-      "pnpx": "/home/.vite-plus/package_manager/pnpm/10.18.0/pnpm/bin/pnpx"
+      "pnpm": "/home/.local/share/vite-plus/package_manager/pnpm/10.18.0/pnpm/bin/pnpm",
+      "pnpx": "/home/.local/share/vite-plus/package_manager/pnpm/10.18.0/pnpm/bin/pnpx"
     },
     "installed": true,
     "mode": "managed"
