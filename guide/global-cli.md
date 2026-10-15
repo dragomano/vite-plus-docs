@@ -1,3 +1,46 @@
+<script setup lang="ts">
+import { nextTick, onMounted, onUnmounted } from 'vue';
+
+function openTarget() {
+  let target: HTMLElement | null;
+  try {
+    target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+  } catch {
+    return;
+  }
+  if (!target?.closest('details')) return;
+
+  for (let details = target.closest('details'); details; details = details.parentElement?.closest('details') ?? null) {
+    details.open = true;
+  }
+
+  // VitePress cannot measure a heading inside closed details. Correct the scroll after revealing it.
+  requestAnimationFrame(() => {
+    if (!target.isConnected) return;
+    target.scrollIntoView({ block: 'start' });
+  });
+}
+
+function onAnchorClick(event: MouseEvent) {
+  if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+  const link = event.target instanceof Element ? event.target.closest('a') : null;
+  // Clicking the current hash again does not emit hashchange.
+  if (link?.href === location.href) openTarget();
+}
+
+onMounted(async () => {
+  window.addEventListener('hashchange', openTarget);
+  document.addEventListener('click', onAnchorClick);
+  await nextTick();
+  openTarget();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('hashchange', openTarget);
+  document.removeEventListener('click', onAnchorClick);
+});
+</script>
+
 # Глобальный CLI {#global-cli}
 
 Глобальный CLI представляет собой автономный бинарный файл `vp` для управления рантаймами и пакетами на уровне машины. Он включает инструментарий Vite+, не требует предварительной установки Node.js и может использоваться без добавления `vite-plus` в проект.
@@ -65,7 +108,7 @@ vp help
 #### `VP_HOME`
 
 - **Назначение**: необязательный параметр для закрепления единого корневого каталога. Укажите абсолютный путь. В этом случае Vite+ размещает `bin`, `data`, `cache`, `config` и `state` в указанном каталоге. Установленный CLI также использует эту переменную. См. раздел [Окружение](/guide/env).
-- **По умолчанию**: не задано. Vite+ повторно использует существующую установку в `~/.vite-plus` в Unix или `%USERPROFILE%\.vite-plus` в Windows. Каталог должен содержать ссылку `current`. В противном случае новая установка использует разделённую структуру каталогов для конкретной платформы. В Unix используются `~/.local/share/vite-plus` и принадлежащий Vite+ подкаталог `bin`. В Windows используются `%LOCALAPPDATA%\vite-plus\data` и `%LOCALAPPDATA%\vite-plus\bin`.
+- **По умолчанию**: не задано. Vite+ повторно использует существующую установку в `~/.vite-plus` в Unix или `%USERPROFILE%\.vite-plus` в Windows. Каталог должен содержать ссылку `current`. В противном случае новая установка использует раздельную структуру каталогов для конкретной платформы, показанную ниже.
 - **Пример**:
 
   ```bash
@@ -77,6 +120,20 @@ vp help
   # PowerShell
   $env:VP_HOME = "D:\vite-plus"; irm https://vite.plus/ps1 | iex
   ```
+
+Новые установки с раздельной структурой каталогов используют следующие значения по умолчанию:
+
+| Каталог        | macOS и Linux              | Windows                          |
+| -------------- | -------------------------- | -------------------------------- |
+| Данные         | `~/.local/share/vite-plus` | `%LOCALAPPDATA%\vite-plus\data`  |
+| Бинарные файлы | `<DATA>/bin`               | `%LOCALAPPDATA%\vite-plus\bin`   |
+| Кэш            | `~/.cache/vite-plus`       | `%LOCALAPPDATA%\vite-plus\cache` |
+| Конфигурация   | `~/.config/vite-plus`      | `%APPDATA%\vite-plus`            |
+| Состояние      | `~/.local/state/vite-plus` | `%LOCALAPPDATA%\vite-plus\state` |
+
+В macOS и Linux абсолютные значения `XDG_DATA_HOME`, `XDG_CACHE_HOME`, `XDG_CONFIG_HOME` и `XDG_STATE_HOME` переопределяют соответствующие базовые каталоги. Каталог бинарных файлов следует за каталогом данных.
+
+Управляемые шимы с низким приоритетом находятся в `<DATA>/fallback-bin`, где `<DATA>` — это разрешённый каталог данных.
 
 #### `VP_BIN_DIR` / `VP_DATA_DIR` / `VP_CACHE_DIR`
 
@@ -97,6 +154,17 @@ vp help
 - **Назначение**: URL пользовательского реестра npm
 - **По умолчанию**: `https://registry.npmjs.org`
 - **Эквивалент в CLI**: `--registry`
+- **Управляемые менеджеры пакетов**: когда Vite+ загружает закреплённую версию npm, pnpm,
+  Yarn или Bun, она также читает `.npmrc` в корне рабочего пространства и пользовательский `.npmrc`.
+  Учитываются реестры на уровне пакета и учётные данные `_authToken`, `_auth` или
+  `username`/`_password` на уровне реестра. Храните секреты в переменных среды
+  и ссылайтесь на них из `.npmrc`, например:
+
+  ```ini
+  registry=https://npm.corp.example/repository/npm/
+  //npm.corp.example/repository/npm/:_authToken=${NPM_TOKEN}
+  ```
+
 - **Пример**:
   ```bash
   curl -fsSL https://vite.plus | NPM_CONFIG_REGISTRY=https://registry.npmmirror.com bash
@@ -337,6 +405,10 @@ vp dlx create-vite   # Скачать и запустить бинарный ф�
 ```
 
 Для запуска существующих скриптов из `package.json` локальная зависимость `vite-plus` не требуется. Добавьте [локальный CLI проекта](/guide/local-cli), если хотите, чтобы версия фронтенд-инструментария была зафиксирована в манифесте и lock-файле проекта.
+
+## Запуск команды в другом каталоге {#run-a-command-in-another-directory}
+
+Используйте `vp -C <dir> <command>`, чтобы выполнить любую команду `vp` из другого рабочего каталога. Примеры и подробности см. в разделе [Выбор пакета с помощью `-C`](/guide/monorepo#targeting-a-package-with-c).
 
 ## Использование обоих CLI вместе {#use-both-clis-together}
 
