@@ -11,19 +11,19 @@
 ::: code-group
 
 ```bash [pnpm]
-pnpm dlx --package=vite-plus vp create
+pnpm create vite-plus
 ```
 
 ```bash [npm]
-npx --package=vite-plus vp create
+npm create vite-plus@latest
 ```
 
 ```bash [Yarn]
-yarn dlx --package vite-plus vp create
+yarn create vite-plus
 ```
 
 ```bash [Bun]
-bunx --package vite-plus vp create
+bun create vite-plus
 ```
 
 :::
@@ -39,11 +39,27 @@ bunx --package vite-plus vp create
 
 ### Ручная установка {#manual-installation}
 
-Если вы вручную переносите проект на Vite+, сначала установите следующие dev-зависимости:
+Если вы вручную переносите проект на Vite+, сначала установите `vite-plus` в качестве dev-зависимости:
 
-```bash
-vp install -D vite-plus
+::: code-group
+
+```bash [npm]
+npm install -D vite-plus
 ```
+
+```bash [Yarn]
+yarn add -D vite-plus
+```
+
+```bash [pnpm]
+pnpm add -D vite-plus
+```
+
+```bash [Bun]
+bun add -D vite-plus
+```
+
+:::
 
 Необходимо добавить переопределения в настройки вашего пакетного менеджера, чтобы другие пакеты использовали версии Vite+, а именно: указать `vite` как алиас для `@voidzero-dev/vite-plus-core`, подставив `<vite-plus-version>` — установленную версию `vite-plus`, а для `vitest` зафиксировать `<vitest-version>` — версию из состава Vite+, которую показывает `vp toolchain vitest`, чтобы весь проект использовал одну и ту же копию Vitest вместе с `vp test`. Без фиксации версии `vitest` зависимость или пакет workspace может подтянуть другую версию Vitest, отличную от раннера из состава Vite+, из-за чего внутренние компоненты Vitest (моки, `expect`, состояние раннера) окажутся разделены:
 

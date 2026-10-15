@@ -20,6 +20,40 @@ vp create <template>
 vp create <template> -- <template-options>
 ```
 
+### Без глобального CLI {#without-the-global-cli}
+
+Если вы ещё не установили [глобальный `vp`](/guide/global-cli), Vite+ предоставляет пакет `create-vite-plus`, который запускает `vp create` через ваш менеджер пакетов.
+
+::: code-group
+
+```bash [pnpm]
+pnpm create vite-plus
+```
+
+```bash [npm]
+npm create vite-plus@latest
+```
+
+```bash [Yarn]
+yarn create vite-plus
+```
+
+```bash [Bun]
+bun create vite-plus
+```
+
+:::
+
+Новый проект использует тот менеджер пакетов, которым была выполнена команда, если только вы не передали `--package-manager` или не создаёте проект внутри существующего рабочего пространства. Аргументы без изменений передаются в `vp create`, поэтому первый аргумент — это шаблон, а не целевая директория:
+
+```bash
+pnpm create vite-plus vite:application --directory my-app
+```
+
+Если вы используете npm, перед параметрами, предназначенными для `vp create`, нужен разделитель `--`, например `npm create vite-plus@latest -- vite:application --directory my-app`.
+
+После создания проекта запускайте `vp` через менеджер пакетов, например `pnpm exec vp run`.
+
 ## Встроенные шаблоны {#built-in-templates}
 
 Vite+ поставляется со следующими встроенными шаблонами:
