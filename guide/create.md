@@ -76,7 +76,7 @@ Vite+ поставляется со следующими встроенными 
 
 ## Параметры {#options}
 
-- `--directory <dir>` записывает сгенерированный проект в указанную целевую директорию
+- `--directory <dir>` записывает сгенерированный проект в указанную целевую директорию. Этот параметр поддерживают только встроенные шаблоны и поставляемые вместе с Vite+ шаблоны `@org`.
 - `--agent <name>` создаёт файлы с инструкциями для агента во время генерации проекта
 - `--no-agent` пропускает настройку инструкций для агента
 - `--editor <name>` записывает конфигурационные файлы редактора
@@ -90,6 +90,10 @@ Vite+ поставляется со следующими встроенными 
 - `--list` выводит список доступных встроенных и популярных шаблонов
 - `--hooks` включает настройку pre-commit хука (диспетчер + `.vite-hooks` + конфигурация `staged`)
 - `--no-hooks` пропускает настройку хуков
+
+::: info
+`--git` и `--no-git` недоступны при добавлении пакета в существующий монорепозиторий.
+:::
 
 После создания проекта управляйте диспетчером с помощью `vp hooks status`, `vp hooks disable` и `vp hooks enable`. См. [руководство по хукам коммитов](/guide/commit-hooks).
 
@@ -164,7 +168,9 @@ vp create vite:generator
 
 Локальные генераторы объявляются в [`create.templates`](/config/create#create-templates) в файле `vite.config.ts` монорепозитория. Это основной источник истины: в списке выбора `vp create` отображаются только зарегистрированные шаблоны.
 
-Команда `vp create vite:generator` регистрирует генератор автоматически, добавляя запись в `create.templates` корневого файла `vite.config.ts`:
+Команда `vp create vite:generator` регистрирует генератор автоматически, добавляя запись в `create.templates` корневого файла `vite.config.ts`.
+
+Например, генератор с именем `my-generator`, созданный в `generators/my-generator`, регистрируется следующим образом:
 
 ```ts
 import { defineConfig } from 'vite-plus';
@@ -172,7 +178,11 @@ import { defineConfig } from 'vite-plus';
 export default defineConfig({
   create: {
     templates: [
-      { name: 'my-generator', description: 'Generate new components', template: 'my-generator' },
+      {
+        name: 'my-generator',
+        description: 'A starter for creating a Vite+ code generator.',
+        template: './generators/my-generator',
+      },
     ],
   },
 });
