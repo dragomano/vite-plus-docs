@@ -220,7 +220,7 @@ export default defineConfig({
 
 ### lint-staged
 
-Vite+ заменяет lint-staged своим собственным блоком `staged` в `vite.config.ts`. Поддерживается только формат конфигурации `staged`. Автоматическая миграция standalone-файла `.lintstagedrc` в не-JSON формате и `lint-staged.config.*` не выполняется.
+Vite+ заменяет lint-staged собственным блоком `staged` в `vite.config.ts`. Команда `vp staged` читает свою конфигурацию из блока `staged` в `vite.config.ts`, а не из отдельных файлов конфигурации lint-staged. Отдельный файл `.lintstagedrc` в формате, отличном от JSON, и файлы `lint-staged.config.*` автоматически не переносятся.
 
 Переместите ваши правила lint-staged в блок `staged`:
 
