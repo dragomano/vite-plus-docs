@@ -38,6 +38,8 @@ Select a task (↑/↓, Enter to run, Esc to clear):
     test: jest
 ```
 
+Если включено [автодополнение оболочки](/guide/env#shell-completion), нажимайте Tab после `vp run ` или `vpr `, чтобы дополнять названия задач из вашего проекта.
+
 ## Встроенные команды и сценарии {#built-in-commands-vs-scripts}
 
 `vp dev` — это встроенная команда. `vp run dev` — это ваш сценарий `dev`. Встроенные команды нельзя переопределить, поэтому добавление сценария `dev` не изменяет поведение `vp dev`:
@@ -250,18 +252,18 @@ $ vp build
 ✓ built in 28ms
 
 ---
-vp run: 0/2 cache hit (0%).
+vp run: 0/2 cache hit (0%), 2/2 successful.
 ```
 
-У каждой подзадачи есть собственная запись в кэше. Если изменились только файлы `.ts`, но проверка линтером по-прежнему проходит успешно, при следующем запуске `vp run --cache check` будет повторно выполнена только команда `vp build`:
+У каждой подзадачи есть собственная запись в кэше. Например, если изменится файл, используемый только сборкой, например `index.html`, при следующем запуске `vp run --cache check` будет повторно выполнена только сборка:
 
 ```
 $ vp lint ✓ cache hit, replaying
-$ vp build ✗ cache miss: 'src/index.ts' modified, executing
+$ vp build ✗ cache miss: 'index.html' modified, executing
 ✓ built in 30ms
 
 ---
-vp run: 1/2 cache hit (50%), 120ms saved.
+vp run: 1/2 cache hit (50%), 2/2 successful, 120ms saved.
 ```
 
 ### Вложенная команда `vp run` {#nested-vp-run}
