@@ -32,7 +32,7 @@ building legacy app for production...
 Используйте `vp run` без имени задачи, чтобы открыть интерактивный запуск задач:
 
 ```
-Select a task (↑/↓, Enter to run, Esc to clear):
+Select a task (↑/↓, Enter to run, type to search):
 
   › build: node compile-legacy-app.js
     test: jest
@@ -71,7 +71,7 @@ $ node compile-legacy-app.js
 Если ничего не изменилось, при следующем запуске вывод будет воспроизведён из кэша:
 
 ```
-$ node compile-legacy-app.js ✓ cache hit, replaying
+$ node compile-legacy-app.js ◉ cache hit, replaying
 ✓ built in 69s
 
 ---
@@ -81,7 +81,7 @@ vp run: cache hit, 69s saved.
 Если входные данные изменились, задача будет выполнена повторно:
 
 ```
-$ node compile-legacy-app.js ✗ cache miss: 'legacy/index.js' modified, executing
+$ node compile-legacy-app.js ○ cache miss: 'legacy/index.js' modified, executing
 ```
 
 ## Определение задач {#task-definitions}
@@ -258,8 +258,8 @@ vp run: 0/2 cache hit (0%), 2/2 successful.
 У каждой подзадачи есть собственная запись в кэше. Например, если изменится файл, используемый только сборкой, например `index.html`, при следующем запуске `vp run --cache check` будет повторно выполнена только сборка:
 
 ```
-$ vp lint ✓ cache hit, replaying
-$ vp build ✗ cache miss: 'index.html' modified, executing
+$ vp lint ◉ cache hit, replaying
+$ vp build ○ cache miss: 'index.html' modified, executing
 ✓ built in 30ms
 
 ---

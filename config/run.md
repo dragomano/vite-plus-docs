@@ -235,12 +235,16 @@ tasks: {
 
 Не добавляйте переменную в `untrackedEnv`, если её значение влияет на результат выполнения задачи. Если инструмент отчётности о кэше отслеживает переменную через [автоматическое отслеживание](/guide/automatic-data-tracking#cooperative-tracking), не добавляйте её ни в `env`, ни в `untrackedEnv`.
 
-Vite Task передаёт набор общих переменных окружения всем задачам:
+Vite Task по умолчанию включает неотслеживаемые шаблоны для системных переменных и распространённых инструментов. Например:
 
-- **Системные:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`
-- **Node.js:** `NODE_OPTIONS`, `COREPACK_HOME`, `PNPM_HOME`
-- **CI/CD:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`, `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
-- **Терминал:** переменные, связанные с цветами (`FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM`, `TERM_PROGRAM`), не передаются задачам автоматически, если только вы не укажете их в `env` (значение включается в отпечаток кэша, поэтому его изменение приводит к инвалидизации кэша) или в `untrackedEnv` (передаётся без включения в отпечаток кэша). Если `FORCE_COLOR` отсутствует в обоих списках, дочерний процесс получает `FORCE_COLOR=1`, чтобы кэшированные логи сохраняли цветовое оформление. При отображении цвета автоматически удаляются, если терминал не поддерживает их вывод.
+- **Системные:** `HOME`, `USER`, `PATH`, `SHELL`, `LANG`, `TZ`, `TMP`, `TEMP`
+- **Node.js и менеджеры пакетов:** `NODE_OPTIONS`, `NPM_CONFIG_STORE_DIR`, `PNPM_HOME`
+- **CI:** `CI`, `VERCEL_*`, `NEXT_*`, `GITHUB_*`, `RUNNER_*`, `ACTIONS_ID_TOKEN_REQUEST_URL`
+- **Windows:** `APPDATA`, `LOCALAPPDATA`, `SYSTEMROOT`, `USERPROFILE`
+- **Инструменты разработки:** `VSCODE_*`, `JB_IDE_*`, `DOCKER_*`, `BUILDKIT_*`, `COMPOSE_*`, `PLAYWRIGHT_*`
+- **Токены:** `*_TOKEN`, включая `ACTIONS_ID_TOKEN_REQUEST_TOKEN`
+
+Переменные, связанные с цветами, такие как `FORCE_COLOR`, `NO_COLOR`, `COLORTERM`, `TERM` и `TERM_PROGRAM`, требуют явной записи в `env` или `untrackedEnv`. Если `FORCE_COLOR` отсутствует в обоих списках, Vite Task устанавливает `FORCE_COLOR=1`, чтобы кэшированные логи сохраняли цветовое оформление. При отображении цвета автоматически удаляются, если терминал не поддерживает их вывод.
 
 ### `cache.input`
 

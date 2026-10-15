@@ -15,9 +15,9 @@ Vite Task может автоматически отслеживать зави�
 Когда происходит промах кэша, Vite Task точно сообщает причину:
 
 ```
-$ vp lint ✗ cache miss: 'src/utils.ts' modified, executing
-$ vp build ✗ cache miss: env 'VITE_GREETING' changed, executing
-$ vp test ✗ cache miss: args changed, executing
+$ vp lint ○ cache miss: 'src/utils.ts' modified, executing
+$ vp build ○ cache miss: env 'VITE_GREETING' changed, executing
+$ vp test ○ cache miss: args changed, executing
 ```
 
 ## Когда включено кэширование? {#when-is-caching-enabled}
