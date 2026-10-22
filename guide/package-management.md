@@ -211,9 +211,10 @@ npm v12 пропускает сценарии установки зависим�
   - **Зависимости**: `ci`, `prune`, `list`, `rebuild`, `approve-builds`
   - **Патчинг**: `patch`, `patch-commit`
   - **Упаковка и публикация**: `pack`, `version`, `publish`, `stage`, `dist-tag`, `deprecate`
-  - **Просмотр**: `view`, `search`, `audit`, `fund`, `ping`
-  - **Аутентификация и доступ**: `login`, `logout`, `whoami`, `token`, `owner`
+  - **Просмотр**: `view`, `search`, `licenses`, `audit`, `fund`, `ping`
+  - **Аутентификация и доступ**: `login`, `logout`, `whoami`, `token`, `owner`, `team`
   - **Конфигурация**: `config`, `cache`
+  - **Манифест пакета**: `pkg get`, `pkg set`, `pkg delete`, `pkg fix`
 
   Поддержка команд зависит от менеджера пакетов и его версии. Выполните `vp pm --help`, чтобы получить список команд, или `vp pm <command> --help`, чтобы увидеть доступные параметры.
 
@@ -224,6 +225,22 @@ vp pm config get registry
 vp pm cache clean -- --force
 vp pm audit --json
 ```
+
+#### Манифест пакета {#package-manifest}
+
+`vp pm pkg` читает и изменяет поля в `package.json`, используя обнаруженный менеджер пакетов.
+
+```bash
+vp pm pkg get name
+vp pm pkg set scripts.build="vite build"
+vp pm pkg set private=true --json
+vp pm pkg delete scripts.build
+vp pm pkg fix
+```
+
+npm поддерживает `get`, `set` и `delete` начиная с 7.20.0, а `fix` — с 9.8.0. pnpm поддерживает все четыре команды начиная с 11.3.0, а Bun — через `bun pm pkg` начиная с 1.2.19. Yarn и неподдерживаемые версии выводят предупреждение и завершаются успешно, не изменяя манифест, — так же, как и `vp pm patch`.
+
+Нативное поведение сохраняется. Например, npm возвращает из `get` JSON, а pnpm по умолчанию выводит строковое значение без кавычек. Используйте `--json`, чтобы запросить JSON-вывод или разобрать значения, передаваемые в `set`, как JSON. Дополнительные нативные параметры можно передать после `--`. Исправления, вносимые командой `fix`, зависят от менеджера пакетов.
 
 #### Поэтапная публикация {#staged-publishing}
 
