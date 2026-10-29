@@ -87,6 +87,27 @@ overrides:
 
 :::
 
+::: warning Прямые зависимости в проекте npm
+Если в вашем проекте npm пакет `vite` уже указан в `dependencies` или `devDependencies`, замените эту запись на тот же алиас, что и в `overrides.vite`. npm требует, чтобы прямая зависимость и её переопределение использовали [одинаковую спецификацию зависимости](https://docs.npmjs.com/cli/v11/configuring-npm/package-json/#overrides). Иначе `npm install` завершится с ошибкой `EOVERRIDE`.
+
+Например, обновите существующую зависимость для разработки `vite` следующим образом. Остальные зависимости в манифесте оставьте без изменений:
+
+```json [package.json]
+{
+  "devDependencies": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+    "vite-plus": "<vite-plus-version>"
+  },
+  "overrides": {
+    "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+    "vitest": "<vitest-version>"
+  }
+}
+```
+
+Если вы также объявляете `vitest` напрямую, укажите в записи зависимости ту же точную версию, что и в `overrides.vitest`. После этих изменений выполните `npm install`, чтобы обновить lock-файл и установленные зависимости.
+:::
+
 ::: details Зачем нужны эти настройки?
 
 Зависимости и плагины могут напрямую импортировать `vite` или `vitest`, даже если ваш собственный код импортирует их из `vite-plus`. Эти переопределения согласуют их зависимости с инструментариями, которые использует Vite+:
