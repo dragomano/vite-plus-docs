@@ -8,7 +8,7 @@ import { migrationPrompt, upgradePrompt } from '../.vitepress/theme/data/migrati
 
 ## Обзор {#overview}
 
-Эта команда — отправная точка для объединения отдельных настроек Vite, Vitest, Oxlint, Oxfmt, ESLint, Prettier, tsdown и tsup в Vite+.
+Эта команда — отправная точка для объединения отдельных настроек Vite, Vitest, Oxlint, Oxfmt, ESLint, Prettier, tsdown, tsup и tsx в Vite+.
 
 Используйте её, когда хотите взять существующий проект и перейти на настройки Vite+ по умолчанию, вместо того чтобы вручную настраивать каждый инструмент.
 
