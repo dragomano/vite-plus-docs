@@ -95,7 +95,7 @@ Vite+ поставляется со следующими встроенными 
 `--git` и `--no-git` недоступны при добавлении пакета в существующий монорепозиторий.
 :::
 
-После создания проекта управляйте диспетчером с помощью `vp hooks status`, `vp hooks disable` и `vp hooks enable`. См. [руководство по хукам коммитов](/guide/commit-hooks).
+После создания проекта управляйте диспетчером с помощью `vp hooks status`, `vp hooks disable` и `vp hooks enable`. См. раздел [Хуки коммитов](/guide/commit-hooks).
 
 ### Сценарии сборки зависимостей {#dependency-build-scripts}
 
