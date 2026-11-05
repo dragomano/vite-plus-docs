@@ -63,9 +63,7 @@ Vite+ поддерживает VS Code, Zed и семейство JetBrains IDE 
       "initialization_options": {
         "settings": {
           "run": "onType",
-          "fixKind": "safe_fix",
-          "typeAware": true,
-          "unusedDisableDirectives": "deny"
+          "fixKind": "safe_fix"
         }
       }
     },
