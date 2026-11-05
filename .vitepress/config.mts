@@ -70,6 +70,7 @@ const guideSidebar = [
   {
     text: 'Глобальный CLI',
     items: [
+      { text: 'Homebrew', link: '/guide/homebrew' },
       { text: 'Окружение', link: '/guide/env' },
       { text: 'Обновление Vite+', link: '/guide/upgrade' },
       { text: 'Удаление Vite+', link: '/guide/implode' },
