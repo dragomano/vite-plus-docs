@@ -265,11 +265,12 @@ Vite Task автоматически определяет, какие файлы
 
 ```ts [vite.config.ts]
 tasks: {
-  build: {
-    command: 'vp build',
+  lint: {
+    command: 'vp lint',
     cache: {
       // Используйте `{ auto: true }` для автоматического формирования отпечатка (по умолчанию).
-      input: [{ auto: true }, '!**/*.tsbuildinfo', '!dist/**'],
+      // Не давать каталогу `dist` задачи сборки влиять на эту задачу.
+      input: [{ auto: true }, '!dist/**'],
     },
   },
 }
@@ -348,14 +349,14 @@ tasks: {
 
 Используйте `{ auto: true }`, чтобы сохранить автоматическое отслеживание записи и одновременно добавить явные шаблоны выходных файлов.
 
-Это полезно, когда задача создаёт файлы, которые не должны восстанавливаться из кэша. Например, можно исключить файлы `.tsbuildinfo` TypeScript:
+Это полезно, когда задача создаёт файлы, которые не должны восстанавливаться из кэша, например журнал отладки:
 
 ```ts [vite.config.ts]
 tasks: {
-  typecheck: {
-    command: 'tsc --build',
+  build: {
+    command: 'node build.mjs',
     cache: {
-      output: [{ auto: true }, '!*.tsbuildinfo'],
+      output: [{ auto: true }, '!build.log'],
     },
   },
 }
