@@ -29,7 +29,7 @@ const guideSidebar = [
         ],
       },
       { text: 'Обновление Vite+', link: '/guide/upgrade-project' },
-      { text: 'Управление пакетами', link: '/guide/package-management' },
+      { text: 'Управление пакетами', link: '/guide/package-management/' },
     ],
   },
   {
@@ -61,10 +61,103 @@ const guideSidebar = [
       },
       {
         text: 'Запуск бинарных файлов',
-        link: '/guide/vpx',
+        items: [
+          { text: 'Обзор', link: '/guide/vpx' },
+          { text: 'vp dlx', link: '/guide/package-management/dlx' },
+        ],
       },
       { text: 'Хуки коммитов', link: '/guide/commit-hooks' },
       { text: 'Монорепозиторий', link: '/guide/monorepo' },
+    ],
+  },
+  {
+    text: 'Управление пакетами',
+    items: [
+      { text: 'Обзор', link: '/guide/package-management/' },
+      {
+        text: 'Выбор менеджера пакетов',
+        link: '/guide/package-management/package-manager-selection',
+      },
+      { text: 'Глобальные пакеты', link: '/guide/package-management/global-packages' },
+      {
+        text: 'Основные команды',
+        items: [
+          { text: 'install', link: '/guide/package-management/install' },
+          { text: 'add', link: '/guide/package-management/add' },
+          { text: 'remove', link: '/guide/package-management/remove' },
+          { text: 'update', link: '/guide/package-management/update' },
+          { text: 'dedupe', link: '/guide/package-management/dedupe' },
+          { text: 'outdated', link: '/guide/package-management/outdated' },
+          { text: 'list', link: '/guide/package-management/list' },
+          { text: 'why', link: '/guide/package-management/why' },
+          { text: 'info', link: '/guide/package-management/info' },
+          { text: 'link', link: '/guide/package-management/link' },
+          { text: 'unlink', link: '/guide/package-management/unlink' },
+          { text: 'rebuild', link: '/guide/package-management/rebuild' },
+          { text: 'dlx', link: '/guide/package-management/dlx' },
+        ],
+      },
+      {
+        text: 'Перенаправленные команды',
+        collapsed: true,
+        items: [
+          {
+            text: 'Установка и очистка',
+            items: [
+              { text: 'pm ci', link: '/guide/package-management/ci' },
+              { text: 'pm prune', link: '/guide/package-management/prune' },
+            ],
+          },
+          {
+            text: 'Просмотр и диагностика',
+            items: [
+              { text: 'pm licenses', link: '/guide/package-management/licenses' },
+              { text: 'pm search', link: '/guide/package-management/search' },
+              { text: 'pm audit', link: '/guide/package-management/audit' },
+              { text: 'pm fund', link: '/guide/package-management/fund' },
+              { text: 'pm ping', link: '/guide/package-management/ping' },
+            ],
+          },
+          {
+            text: 'Локальная разработка',
+            items: [
+              { text: 'pm approve-builds', link: '/guide/package-management/approve-builds' },
+              { text: 'pm patch', link: '/guide/package-management/patch' },
+              { text: 'pm patch-commit', link: '/guide/package-management/patch-commit' },
+            ],
+          },
+          {
+            text: 'Публикация',
+            items: [
+              { text: 'pm pack', link: '/guide/package-management/pack' },
+              { text: 'pm version', link: '/guide/package-management/version' },
+              { text: 'pm publish', link: '/guide/package-management/publish' },
+              { text: 'pm stage', link: '/guide/package-management/stage' },
+              { text: 'pm dist-tag', link: '/guide/package-management/dist-tag' },
+              { text: 'pm deprecate', link: '/guide/package-management/deprecate' },
+            ],
+          },
+          {
+            text: 'Реестр и учётные записи',
+            items: [
+              { text: 'pm login', link: '/guide/package-management/login' },
+              { text: 'pm logout', link: '/guide/package-management/logout' },
+              { text: 'pm whoami', link: '/guide/package-management/whoami' },
+              { text: 'pm token', link: '/guide/package-management/token' },
+              { text: 'pm owner', link: '/guide/package-management/owner' },
+              { text: 'pm team', link: '/guide/package-management/team' },
+            ],
+          },
+          {
+            text: 'Конфигурация и обслуживание',
+            items: [
+              { text: 'pm config', link: '/guide/package-management/config' },
+              { text: 'pm pkg', link: '/guide/package-management/pkg' },
+              { text: 'pm cache', link: '/guide/package-management/cache' },
+            ],
+          },
+        ],
+      },
     ],
   },
   {
@@ -144,8 +237,8 @@ export default extendConfig(
         },
         resolve: {
           alias: [
-            { find: '@local-assets', replacement: resolve(__dirname, 'theme/assets') },
-            { find: '@layouts', replacement: resolve(__dirname, 'theme/layouts') },
+            { find: '@local-assets', replacement: resolve(import.meta.dirname, 'theme/assets') },
+            { find: '@layouts', replacement: resolve(import.meta.dirname, 'theme/layouts') },
             // dayjs ships CJS by default; redirect to its ESM build so
             // mermaid (imported via vitepress-plugin-mermaid) works in dev
             { find: /^dayjs$/, replacement: 'dayjs/esm' },

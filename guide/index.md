@@ -100,9 +100,9 @@ Vite+ охватывает полный цикл фронтенд-разрабо
 
 - [`vp create`](/guide/create) создаёт новые приложения, пакеты и монорепозитории.
 - [`vp migrate`](/guide/migrate) переносит существующие проекты на Vite+.
-- [`vp install`](/guide/package-management) устанавливает зависимости с помощью подходящего менеджера пакетов.
-- [`vp add`](/guide/package-management), [`vp remove`](/guide/package-management), [`vp update`](/guide/package-management), [`vp dedupe`](/guide/package-management), [`vp outdated`](/guide/package-management), [`vp list`](/guide/package-management), [`vp why`](/guide/package-management) и [`vp info`](/guide/package-management) охватывают остальные операции рабочего процесса управления пакетами.
-- [`vp link`](/guide/package-management), [`vp unlink`](/guide/package-management), [`vp rebuild`](/guide/package-management) и [`vp pm <command>`](/guide/package-management) предоставляют низкоуровневые операции менеджера пакетов.
+- [`vp install`](/guide/package-management/install) устанавливает зависимости с помощью подходящего менеджера пакетов.
+- [`vp add`](/guide/package-management/add), [`vp remove`](/guide/package-management/remove), [`vp update`](/guide/package-management/update), [`vp dedupe`](/guide/package-management/dedupe), [`vp outdated`](/guide/package-management/outdated), [`vp list`](/guide/package-management/list), [`vp why`](/guide/package-management/why) и [`vp info`](/guide/package-management/info) охватывают остальные операции рабочего процесса управления пакетами.
+- [`vp link`](/guide/package-management/link), [`vp unlink`](/guide/package-management/unlink), [`vp rebuild`](/guide/package-management/rebuild) и [`vp pm <command>`](/guide/package-management/) предоставляют низкоуровневые операции менеджера пакетов.
 
 ### Инструментарий проекта {#project-toolchain}
 
@@ -115,7 +115,7 @@ Vite+ охватывает полный цикл фронтенд-разрабо
 - [`vp toolchain`](/guide/upgrade#show-the-toolchain) показывает активный инструментарий проекта; используйте `--global`, чтобы вместо этого проверить глобальную установку.
 - [`vp run`](/guide/run) запускает задачи по рабочим пространствам с кэшированием.
 - [`vp cache clean`](/guide/cache) очищает записи кэша задач.
-- [`vp exec`](/guide/vpx) запускает локальные бинарные файлы проекта, а [`vp dlx`](/guide/vpx) и [`vpx`](/guide/vpx) скачивают и запускают бинарные файлы пакетов.
+- [`vp exec`](/guide/vpx) запускает локальные бинарные файлы проекта, а [`vp dlx`](/guide/package-management/dlx) и [`vpx`](/guide/vpx) скачивают и запускают бинарные файлы пакетов.
 - [`vp config`](/guide/commit-hooks) устанавливает диспетчер Git-хуков и настраивает интеграцию с агентами.
 - [`vp hooks`](/guide/commit-hooks) управляет диспетчером Git-хуков, а [`vp staged`](/guide/commit-hooks) запускает проверки для проиндексированных файлов.
 - [Руководство по монорепозиториям](/guide/monorepo) посвящено структуре многопакетных проектов и соответствующим командам.
