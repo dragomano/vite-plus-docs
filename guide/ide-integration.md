@@ -167,6 +167,6 @@ Vite+ поддерживает VS Code, Zed и семейство JetBrains IDE 
 
 Пожалуйста, добавьте эту строку в основной файл `.gitignore`, чтобы этот файл всегда включался в репозиторий:
 
-```gitignore [.gitignore]
+```text [.gitignore]
 !.idea/externalDependencies.xml
 ```

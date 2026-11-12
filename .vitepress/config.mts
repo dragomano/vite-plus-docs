@@ -217,7 +217,7 @@ export default extendConfig(
       ],
       vite: {
         build: {
-          chunkSizeWarningLimit: 1200,
+          chunkSizeWarningLimit: 1600,
           rollupOptions: {
             onwarn(warning, warn) {
               if (warning.code === 'INVALID_ANNOTATION') {
