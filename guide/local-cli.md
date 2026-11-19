@@ -61,26 +61,26 @@ bun add -D vite-plus
 
 :::
 
-Необходимо добавить переопределения в настройки вашего пакетного менеджера, чтобы другие пакеты использовали версии Vite+, а именно: указать `vite` как алиас для `@voidzero-dev/vite-plus-core`, подставив `<vite-plus-version>` — установленную версию `vite-plus`, а для `vitest` зафиксировать `<vitest-version>` — версию из состава Vite+, которую показывает `vp toolchain vitest`, чтобы весь проект использовал одну и ту же копию Vitest вместе с `vp test`. Без фиксации версии `vitest` зависимость или пакет workspace может подтянуть другую версию Vitest, отличную от раннера из состава Vite+, из-за чего внутренние компоненты Vitest (моки, `expect`, состояние раннера) окажутся разделены:
+Добавьте переопределения в настройки менеджера пакетов, чтобы другие пакеты использовали версии Vite+. Укажите `vite` в качестве алиаса для `@voidzero-dev/vite-plus-core`, подставив `<core-version>` — версию ядра, которую использует установленный пакет `vite-plus`; её показывает `vp toolchain vite-plus-core`. Зафиксируйте `vitest` на `<vitest-version>`, используя версию из состава Vite+, которую показывает `vp toolchain vitest`, чтобы весь проект использовал одну и ту же копию Vitest вместе с `vp test`. Без фиксации версии `vitest` зависимость или пакет рабочего пространства может подтянуть другую версию Vitest, отличную от раннера из состава Vite+, из-за чего внутренние компоненты Vitest (моки, `expect`, состояние раннера) окажутся разделены:
 
 ::: code-group
 
 ```yaml [pnpm-workspace.yaml]
 overrides:
-  vite@*: npm:@voidzero-dev/vite-plus-core@<vite-plus-version> # Укажите установленную версию vite-plus
+  vite@*: npm:@voidzero-dev/vite-plus-core@<core-version> # Возьмите версию из vp toolchain vite-plus-core
   vitest@*: <vitest-version> # Возьмите версию из vp toolchain vitest
 ```
 
 ```json [npm / Bun package.json]
 "overrides": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vite": "npm:@voidzero-dev/vite-plus-core@<core-version>",
   "vitest": "<vitest-version>"
 }
 ```
 
 ```json [Yarn package.json]
 "resolutions": {
-  "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+  "vite": "npm:@voidzero-dev/vite-plus-core@<core-version>",
   "vitest": "<vitest-version>"
 }
 ```
@@ -95,11 +95,11 @@ overrides:
 ```json [package.json]
 {
   "devDependencies": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+    "vite": "npm:@voidzero-dev/vite-plus-core@<core-version>",
     "vite-plus": "<vite-plus-version>"
   },
   "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@<vite-plus-version>",
+    "vite": "npm:@voidzero-dev/vite-plus-core@<core-version>",
     "vitest": "<vitest-version>"
   }
 }
@@ -113,9 +113,10 @@ overrides:
 Зависимости и плагины могут напрямую импортировать `vite` или `vitest`, даже если ваш собственный код импортирует их из `vite-plus`. Эти переопределения согласуют их зависимости с инструментариями, которые использует Vite+:
 
 - Алиас `vite` направляет такие импорты на основной пакет Vite+. Отдельные экземпляры Vite могут нарушать проверки идентичности во время выполнения: в [issue #1391](https://github.com/voidzero-dev/vite-plus/issues/1391) сообщается, что TanStack Start возвращал ошибки 404 из-за проверки `instanceof`, выполнявшейся между двумя копиями. [PR #2617](https://github.com/voidzero-dev/vite-plus/pull/2617) устраняет эту проблему на стороне CLI, используя один и тот же алиас для общего экземпляра Vite.
+- Версия ядра кодирует версию Vite, входящую в состав пакета. Её мажорная и минорная части совпадают с мажорной и минорной версией Vite, а патч равен патчу Vite, умноженному на 1000, плюс счётчик релизов. Например, ядро `8.3.5000` содержит Vite `8.3.5`. Менеджеры пакетов сравнивают эту версию с диапазонами peer-зависимости `vite` у плагинов, поэтому плагин, поддерживающий входящий в состав Vite, проходит проверку. В pnpm и Yarn плагин, который его не поддерживает, всё равно вызывает предупреждение о peer-зависимости. npm применяет `overrides.vite` и к peer-зависимостям, поэтому npm не сообщает о несовместимой peer-зависимости `vite`, а Bun не сообщает о проблемах с peer-зависимостями. В [issue #2806](https://github.com/voidzero-dev/vite-plus/issues/2806) описаны более ранние версии `1.x`, которые не проходили ни одну проверку.
 - Точная фиксация версии `vitest` гарантирует, что зависимости и `vp test` используют одну и ту же версию Vitest, предотвращая появление отдельных моков, экземпляров `expect` и состояния раннера. В [PR #2365](https://github.com/voidzero-dev/vite-plus/pull/2365) это требование описано для ручной установки.
 
-Поддерживайте алиас основного пакета в соответствии с установленной версией `vite-plus`, а при обновлении обновляйте фиксацию версии Vitest в соответствии с версией, входящей в состав пакета. В [issue #2356](https://github.com/voidzero-dev/vite-plus/issues/2356) описано, как боты для обновления зависимостей могут независимо обновлять эти пакеты, оставляя несовместимые версии установленными одновременно.
+Поддерживайте алиас основного пакета в соответствии с версией ядра установленного `vite-plus`, а при обновлении обновляйте фиксацию версии Vitest в соответствии с версией, входящей в состав пакета. В [issue #2356](https://github.com/voidzero-dev/vite-plus/issues/2356) описано, как боты для обновления зависимостей могут независимо обновлять эти пакеты, оставляя несовместимые версии установленными одновременно.
 
 :::
 
