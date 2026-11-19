@@ -4,9 +4,9 @@
 
 ## Обзор {#overview}
 
-`vp check` — команда по умолчанию для быстрого выполнения статических проверок в Vite+. Она объединяет форматирование через [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), линтинг через [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) и проверку типов TypeScript через [tsgolint](https://github.com/oxc-project/tsgolint). Объединяя все эти задачи в одной команде, `vp check` работает быстрее, чем запуск форматирования, линтинга и проверки типов отдельными инструментами в отдельных командах.
+`vp check` — команда по умолчанию для быстрого выполнения статических проверок в Vite+. Она объединяет форматирование через [Oxfmt](https://oxc.rs/docs/guide/usage/formatter.html), линтинг через [Oxlint](https://oxc.rs/docs/guide/usage/linter.html) и проверку типов TypeScript через [tsrs](https://github.com/oxc-project/tsrs). Объединяя все эти задачи в одной команде, `vp check` работает быстрее, чем запуск форматирования, линтинга и проверки типов отдельными инструментами в отдельных командах.
 
-Когда в блоке `lint.options` файла `vite.config.ts` включены параметры `typeAware` и `typeCheck`, `vp check` также выполняет проверку типов TypeScript через типизированный режим Oxlint, основанный на инструментарии TypeScript Go и [tsgolint](https://github.com/oxc-project/tsgolint). Команды `vp create` и `vp migrate` включают параметры `typeAware` и `typeCheck` по умолчанию.
+Когда в блоке `lint.options` файла `vite.config.ts` включены параметры `typeAware` и `typeCheck`, `vp check` также выполняет проверку типов TypeScript через типизированный режим Oxlint, основанный на `tsrs-lint`. Команды `vp create` и `vp migrate` включают параметры `typeAware` и `typeCheck` по умолчанию.
 
 Мы рекомендуем включить параметры `typeAware` и `typeCheck`, чтобы `vp check` стал единой командой для выполнения статических проверок в процессе разработки.
 
