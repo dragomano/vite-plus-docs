@@ -23,7 +23,7 @@ Vite+ 1.0 доступен. Мы продолжаем улучшать его и
 - Убедитесь, что в `vite.config.ts` включены `lint.options.typeAware` и `lint.options.typeCheck`
 - Проверьте, использует ли ваш `tsconfig.json` параметр `compilerOptions.baseUrl`
 
-Путь проверки типов Oxlint на базе `tsgolint` не поддерживает `baseUrl`. Команды `vp migrate` и `vp lint --init` пытаются выполнить исправление `vp dlx @andrewbranch/ts5to6 --fixBaseUrl <tsconfig path>` перед включением линтинга с учётом типов. Если это исправление завершается ошибкой или пользователь отказывается от его применения, Vite+ пропускает включение `typeAware` и `typeCheck`.
+Проверка типов `tsrs`, используемая Oxlint, не поддерживает `baseUrl`. Команды `vp migrate` и `vp lint --init` пытаются выполнить исправление `vp dlx @andrewbranch/ts5to6 --fixBaseUrl <tsconfig path>` перед включением линтинга с учётом типов. Если это исправление завершается ошибкой или от его применения отказываются, Vite+ пропускает включение `typeAware` и `typeCheck`.
 
 ## Вложенная конфигурация линтинга или форматирования не применяется {#nested-lint-or-format-config-is-not-applied}
 
