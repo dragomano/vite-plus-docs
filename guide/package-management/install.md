@@ -43,7 +43,7 @@ vp install react
 
 Приведённые ниже команды описывают операции над проектом. Глобальный режим описан в разделе [Параметры](#options).
 
-- **npm:** `npm install`, или `npm ci` с `--frozen-lockfile` и без имён пакетов. С именами пакетов: `npm install`.
+- **npm:** `npm install`, или `npm ci` с `--frozen-lockfile` и без имён пакетов. Добавление `--lockfile-only` выполняет `npm ci --dry-run --ignore-scripts`, который проверяет lock-файл, не изменяя `node_modules`. С именами пакетов: `npm install`.
 - **pnpm:** `pnpm install`. С именами пакетов: `pnpm add`.
 - **Yarn Classic:** `yarn install`. С именами пакетов: `yarn add`.
 - **Yarn Modern:** `yarn install`. С именами пакетов: `yarn add`.
@@ -56,7 +56,7 @@ vp install react
 | `--no-optional`          | Да                      | Да                | Да                | Нет               | Да                               |                                                               |
 | `--frozen-lockfile`      | Без имён пакетов        | Без имён пакетов  | Да                | Без имён пакетов  | Да                               |                                                               |
 | `--no-frozen-lockfile`   | Без имён пакетов        | Без имён пакетов  | Без имён пакетов  | Без имён пакетов  | Да                               |                                                               |
-| `--lockfile-only`        | Без `--frozen-lockfile` | Да                | Нет               | 3 или новее       | Да                               | npm игнорирует этот параметр в режиме CI.                     |
+| `--lockfile-only`        | Да                      | Да                | Нет               | 3 или новее       | Да                               | С `--frozen-lockfile` используйте npm 11.16.0 или новее.      |
 | `--prefer-offline`       | Да                      | Да                | Да                | Нет               | 1.4.1 или новее                  |                                                               |
 | `--offline`              | Да                      | Да                | Да                | Нет               | 1.4.1 или новее                  |                                                               |
 | `-f, --force`            | Без `--frozen-lockfile` | Да                | Да                | Нет               | Да                               | npm игнорирует этот параметр в режиме CI.                     |
