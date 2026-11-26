@@ -11,5 +11,5 @@ minimumReleaseAgeExclude:
   - vue@3.5.41
   - '@mermaid-js/parser@1.2.1'
   - mermaid@11.17.0
-  - '@types/node@26.4.0 || 26.5.1 || 26.6.6'
+  - '@types/node@26.4.0 || 26.5.1 || 26.6.6 || 26.6.11'
   - vitepress-plugin-group-icons@1.8.2
